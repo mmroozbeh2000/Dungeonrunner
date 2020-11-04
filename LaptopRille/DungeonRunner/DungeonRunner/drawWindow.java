@@ -22,7 +22,7 @@ private static final long serialVersionUID = 1L;
 
 public drawWindow() {
 handler = new Hanteraren();
-handler.Entitylist.add(new Knight());
+handler.Entitylist.add(new Knight());  //Skapar en test gubbe då jag ska göra om hur gubben skapas från characterscreen(Som inte funkar som det ska just nu)
 mapcolumn = new int[4][4];
 maprow = new int[4][4];
 x=75;
