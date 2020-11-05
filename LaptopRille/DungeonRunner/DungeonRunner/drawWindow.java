@@ -84,19 +84,23 @@ System.out.print(maprow[i][j] + "\t");
 public void moveDown() {
 
 handler.Entitylist.get(0).setY(handler.Entitylist.get(0).getY()+40);
+clamp();
 this.repaint();
 }
 
 public void moveUp() {
 	handler.Entitylist.get(0).setY(handler.Entitylist.get(0).getY()-40);
+	clamp();
 	this.repaint();	
 }
 public void moveLeft() {
 	handler.Entitylist.get(0).setX(handler.Entitylist.get(0).getX()-75);
+	clamp();
 	this.repaint();	
 }
 public void moveRight() {
 	handler.Entitylist.get(0).setX(handler.Entitylist.get(0).getX()+75);
+	clamp();
 	this.repaint();		
 }
 
@@ -108,6 +112,28 @@ public int getRow(int a, int b) {
 return maprow[a][b];	
 }
 
+public void clamp() {
+if(handler.getEntity(0).getX()<mapcolumn[0][0]) {
+handler.getEntity(0).setX(handler.getEntity(0).getX()+75);
+this.repaint();
+}
+else if(handler.getEntity(0).getX()>mapcolumn[3][3]) {
+handler.getEntity(0).setX(handler.getEntity(0).getX()-75);
+repaint();
+}
+else if(handler.getEntity(0).getY()>maprow[3][3]) {
+handler.getEntity(0).setY(handler.getEntity(0).getY()-40);
+repaint();
+}
+else if(handler.getEntity(0).getY()<maprow[0][0]) {
+handler.getEntity(0).setY(handler.getEntity(0).getY()+40);
+repaint();
+}
+
+
+
+	
+	
 
 }
 
