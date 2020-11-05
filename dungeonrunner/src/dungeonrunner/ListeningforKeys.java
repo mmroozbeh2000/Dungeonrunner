@@ -11,10 +11,10 @@ public class ListeningforKeys implements KeyListener{
 private drawWindow dw;
 private drawMediumwindow mdw;
 private drawLargewindow ldw;
-private Hanteraren handler;
+
 
 public ListeningforKeys(drawWindow dw) {
-handler = new Hanteraren();
+
 this.dw=dw;
 }
 
@@ -41,12 +41,15 @@ public void keyTyped(KeyEvent e) {
 		int key = e.getKeyCode();
 		 if(key == KeyEvent.VK_DOWN) {
 		 dw.moveDown();
-		 
+		 dw.setClear();
+		 dw.checkRooms();
 		   
 		 }
 		 
 		 else if(key == KeyEvent.VK_UP) {
 		dw.moveUp();
+		dw.setClear();
+		dw.checkRooms();
 	    
 		
 		
@@ -54,11 +57,15 @@ public void keyTyped(KeyEvent e) {
 		 }
 		 
 		 else if(key == KeyEvent.VK_LEFT) {
-		dw.moveLeft();	
+		dw.moveLeft();
+		dw.setClear();
+		dw.checkRooms();
 		 }
 		 
 		 else if(key == KeyEvent.VK_RIGHT) {
 		dw.moveRight();
+		dw.setClear();
+		dw.checkRooms();
 			 
 		 }
 				

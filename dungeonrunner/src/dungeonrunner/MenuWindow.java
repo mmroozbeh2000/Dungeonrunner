@@ -7,8 +7,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MenuWindow extends JFrame implements ActionListener {
@@ -24,12 +26,19 @@ private JButton createcharacter;
 //JPanels
 private JPanel buttonpanel;
 
+//Imageicon
+private ImageIcon image;
+
+//JLabel
+private JLabel imagelabel;
+
 public MenuWindow() {
 super("Dungeon Runner");
 setLayout(new GridLayout(3,1));
 	
 //JPanels
 buttonpanel = new JPanel();	
+BackgroundPanel background;
 //JButtons
 selectmap = new JButton("Select map");
 loadcharacter = new JButton("Load Character");
@@ -39,6 +48,12 @@ whichwindow = new boolean[3];
 whichwindow[0]=false; // Select Map
 whichwindow[1]=false; // Create Character
 whichwindow[2]=false; // Load Character
+
+//Images
+image = new ImageIcon("C:/Javafiler/Main.jpg");
+imagelabel = new JLabel(image);
+imagelabel.setSize(350,350);
+
 //Add listeners
 selectmap.addActionListener(this);
 loadcharacter.addActionListener(this);
@@ -49,6 +64,7 @@ buttonpanel.add(selectmap);
 buttonpanel.add(createcharacter);
 buttonpanel.add(loadcharacter);
 buttonpanel.setLayout(new GridLayout(3,1));
+background = new BackgroundPanel();
 add(buttonpanel, BorderLayout.CENTER);
 
 //Colors

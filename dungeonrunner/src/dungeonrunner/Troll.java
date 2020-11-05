@@ -1,6 +1,7 @@
 
-package DungeonRunner;
+package dungeonrunner;
 
+import java.awt.Color;
 
 public class Troll extends Entity{
 

@@ -16,7 +16,7 @@ public class TryIt extends Canvas implements WindowListener{
 /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 	
 	
 private MenuWindow mw;  //Start menu
@@ -55,64 +55,64 @@ new TryIt();
 	
 
 
-	@Override
-	public void windowOpened(WindowEvent e) {
+@Override
+public void windowOpened(WindowEvent e) {
 	
 		
 	}
 
 
-	@Override
-	public void windowClosing(WindowEvent e) {
+@Override
+public void windowClosing(WindowEvent e) {
 
 		
-	}
+}
 
 
 	@Override
-	public void windowClosed(WindowEvent e) {
-		if(e.getSource()==cs) {
+public void windowClosed(WindowEvent e) {
+if(e.getSource()==cs) {
 			
-			gw = new GameWindow(HEIGHT,WIDTH);
+gw = new GameWindow(HEIGHT,WIDTH);
 			
 			
 		  
 			
-		}
+}
 		
-		else if(e.getSource()==mw && mw.getWindow(1)==true) {
-			cs = new CharacterScreen();
-			cs.addWindowListener(this);
-		}
+else if(e.getSource()==mw && mw.getWindow(1)==true) {
+cs = new CharacterScreen();
+cs.addWindowListener(this);
+}
 		
-	}
+}
 
 
 	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
+public void windowIconified(WindowEvent e) {
+// TODO Auto-generated method stub
 		
-	}
+}
 
 
 	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
+public void windowDeiconified(WindowEvent e) {
+// TODO Auto-generated method stub
 		
-	}
+}
 
 
-	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
+@Override
+public void windowActivated(WindowEvent e) {
+// TODO Auto-generated method stub
 		
-	}
+}
 
 
-	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
+@Override
+public void windowDeactivated(WindowEvent e) {
+// TODO Auto-generated method stub
 		
-	}
+}
 
 }

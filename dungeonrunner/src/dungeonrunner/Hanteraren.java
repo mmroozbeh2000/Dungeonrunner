@@ -7,31 +7,46 @@ import java.util.List;
 public class Hanteraren {
 
 static Entity Player;	
-List<Entity> Entitylist = new LinkedList<>();	
+static List<Entity> Entitylist = new LinkedList<>();	
 List<mapBox> boxlist = new ArrayList<>();
+
 public Hanteraren() {
 	
 }
 
-public void setThief() {
+public void setThief(){
 Player = new Thief();	
 }
-public void setKnight() {
+public void setKnight(){
 Player = new Knight();	
 }
 
-public void setMage() {
+public void setMage(){
 Player = new Mage();	
+}
 
+public void newSpider(){
+Entitylist.add(new Spider());
+}
+public void newTroll(){
+Entitylist.add(new Troll());	
+}
+
+public void newSkeleton(){
+Entitylist.add(new Skeleton());	
+}
+
+public void newOrc(){
+Entitylist.add(new Orc());
 }
 
 
-public Entity getPlayer() {
+public Entity getPlayer(){
 return Player;	
 }
 
 
-public Entity getEntity(int n) {
+public Entity getEntity(int n){
 return Entitylist.get(n);
 }
 

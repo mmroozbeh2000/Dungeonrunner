@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 
 public class drawWindow extends JPanel{
 private Hanteraren handler;
+private RoomContent rc;   //All the room contents;
+private boolean[][] visited;
 private int [][] mapcolumn;
 private int[][] maprow;
 private int x;
@@ -22,15 +24,22 @@ public drawWindow() {
 handler= new Hanteraren();
 mapcolumn = new int[4][4];
 maprow = new int[4][4];
+visited = new boolean[4][4];
+rc = new RoomContent();
+fillRooms(); //Set all rooms to false and fill them with content.
 x=75;
 y=50;	
-fillMap();
+fillMap();  // Fill the map with x and y values.
 System.out.println(handler.getPlayer());
 handler.getPlayer().setX(mapcolumn[3][3]);
 handler.getPlayer().setY(maprow[3][3]);
 System.out.println(handler.getPlayer().getName());
 }
-	
+
+
+
+
+//Måla ut rektanglarna.
 public void paintComponent(Graphics g) {
 
 
@@ -112,7 +121,7 @@ public int getRow(int a, int b) {
 return maprow[a][b];	
 }
 
-public void clamp() {
+public void clamp() {   //Så att spelaren inte kan gå utanför dimensionen.
 if(handler.getPlayer().getX()<mapcolumn[0][0]) {
 	handler.getPlayer().setX(handler.getPlayer().getX()+75);
 this.repaint();
@@ -129,9 +138,47 @@ else if(handler.getPlayer().getY()<maprow[0][0]) {
 handler.getPlayer().setY(handler.getPlayer().getY()+40);
 repaint();
 }
+}
+
+public void setClear() {   //Om spelaren går in i ett rum så blir det avcheckat.
+for(int i=0;i<mapcolumn.length;i++) {
+for(int j=0;j<mapcolumn.length;j++) {
+if(handler.getPlayer().getX()==mapcolumn[i][j] && handler.getPlayer().getY()==maprow[i][j]) {
+visited[i][j]=true;	
+}	
+}
+}	
+}
 
 
+public void fillRooms() {
+for(int i =0;i< visited.length;i++) {
+for(int j=0;j<visited.length;j++) {
+visited[i][j]=false;	
+rc.addSpider(i, j);
 }
 }
+
+}
+
+public boolean checkRoom(int a, int b) {   //Kolla in rummet.
+if(visited[a][b] ==true) {
+return true;
+}
+return false;
+}
+
+public void checkRooms() {   //Kolla in rummen
+	for(int i =0;i< visited.length;i++) {
+		for(int j=0;j<visited.length;j++) {
+		rc.checkSpider(i, j);
+		}
+		}
+	
+}
+}
+
+
+
 
 

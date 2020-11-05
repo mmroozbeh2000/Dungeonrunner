@@ -1,7 +1,7 @@
 
-package DungeonRunner;
+package dungeonrunner;
 
-
+import java.awt.Color;
 
 public class Spider extends Entity{
     
