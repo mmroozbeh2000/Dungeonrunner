@@ -1,19 +1,16 @@
-package dungeonrunner;
-
+package DungeonRunner;
 
 
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.concurrent.ThreadLocalRandom;
 
 
 public abstract class Entity {
 
-    
-	
-	//G�ra om till Private
+    //bara för monster
+    private int rarity;
+	//Göra om till Private
     private int initiative;
     private int endurance;
     private int attack;
@@ -24,11 +21,12 @@ public abstract class Entity {
     protected int x;
     protected int y;
 
-    //L�gga till attribut f�r score
+    //Lägga till attribut för score
     private double score;
     //Color
     protected Color color;
     
+    //Constructor för spelkaraktär
     public Entity(int initiative, int endurance, int attack, int flexibility, ROLE role, Color color) {
         this.initiative = initiative;
         this.endurance = endurance;
@@ -37,7 +35,16 @@ public abstract class Entity {
         this.role=role;
         this.color=color;
      
-
+    }
+    //Constructor för monster
+    public Entity(int initiative, int endurance, int attack, int flexibility, ROLE role, Color color, int rarity) {
+    this.initiative = initiative;
+    this.endurance = endurance;
+    this.attack = attack;
+    this.flexibility = flexibility;
+    this.role=role;
+    this.color=color;
+    this.rarity = rarity;    
     }
     
     public Entity(ROLE role, int x, int y) {
@@ -52,8 +59,6 @@ public abstract class Entity {
     public abstract void setX(int x);
   
 
-
-    
     public void setScore(double d) {
     this.score=d;	
     }
@@ -93,6 +98,15 @@ public abstract class Entity {
     public void setFlexibility(int flexibility) {
         this.flexibility = flexibility;
     }
+
+    public int getRarity() {
+        return rarity;
+    }
+
+    public void setRarity(int rarity) {
+        this.rarity = rarity;
+    }
+    
 
     
     public int rollTurnOrder() {
