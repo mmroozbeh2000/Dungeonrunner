@@ -70,8 +70,9 @@ imageicons[0]=new ImageIcon("C:/Javafiler/Spider.png");
 //ProgressBars
 spiderbar = new JProgressBar();
 playerbar = new JProgressBar();
-spiderbar.setValue(handler.getSpider().getEndurance());
-playerbar.setValue(handler.getPlayer().getEndurance());
+spiderbar.setValue(100);
+playerbar.setValue(100);
+
 
 //JLabels
 imagelabels = new JLabel[4];	
@@ -174,6 +175,7 @@ buttonpanel.add(flee);
 revalidate();
 }
 else {
+textarea.setText("Spider begins to attack!");	
 buttonpanel.remove(attack);
 buttonpanel.remove(flee);
 monsterAttack(spider, player);	
@@ -188,9 +190,9 @@ e.printStackTrace();
 public void monsterAttack(Entity spider, Entity player) {
 try {
 if(spider.attackAttempt()>player.dodgeAttempt()) {
-textarea.setText("Spider attack player for" + spider.getAttack() + "Damage!");	
-player.setEndurance(player.getEndurance()-1);
-playerbar.setValue(player.getEndurance());
+textarea.setText("Spider attack player for:" + spider.getAttack() + " " + "Damage!");	
+player.setEndurance(player.getEndurance()-spider.getAttack());
+playerbar.setValue(playerbar.getValue()-20); // Ska uppdateras
 playerlabel.setText("Player Endurance:" + Integer.toString(player.getEndurance()));
 buttonpanel.add(attack);
 buttonpanel.add(flee);
