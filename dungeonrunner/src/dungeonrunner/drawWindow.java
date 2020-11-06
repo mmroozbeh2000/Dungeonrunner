@@ -3,6 +3,7 @@ package dungeonrunner;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -113,6 +114,10 @@ clamp();
 this.repaint();		
 }
 
+public int [][] getMap() {
+return mapcolumn;	
+}
+
 
 public int getColumn(int a, int b) {
 return mapcolumn[a][b];	
@@ -157,6 +162,7 @@ for(int j=0;j<visited.length;j++) {
 visited[i][j]=false;	
 rc.addSpider(i, j);
 }
+
 }
 
 }
@@ -169,9 +175,10 @@ return false;
 }
 
 public void checkRooms() {   //Kolla in rummen
-	for(int i =0;i< visited.length;i++) {
-		for(int j=0;j<visited.length;j++) {
-		rc.checkSpider(i, j);
+	for(int i =0;i< mapcolumn.length;i++) {
+		for(int j=0;j<mapcolumn.length;j++) {
+		rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY());
+		
 		}
 		}
 	

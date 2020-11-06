@@ -7,6 +7,7 @@ import java.util.List;
 public class Hanteraren {
 
 static Entity Player;	
+static Entity Spider;
 static List<Entity> Entitylist = new LinkedList<>();	
 List<mapBox> boxlist = new ArrayList<>();
 
@@ -26,7 +27,7 @@ Player = new Mage();
 }
 
 public void newSpider(){
-Entitylist.add(new Spider());
+Spider = new Spider();
 }
 public void newTroll(){
 Entitylist.add(new Troll());	
@@ -43,6 +44,9 @@ Entitylist.add(new Orc());
 
 public Entity getPlayer(){
 return Player;	
+}
+public Entity getSpider() {
+return Spider;	
 }
 
 

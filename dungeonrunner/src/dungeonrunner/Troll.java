@@ -6,7 +6,7 @@ import java.awt.Color;
 public class Troll extends Entity{
 
     public Troll() {
-        super(2, 4, 7, 2, null, null, 5);
+        super(2, 4, 7, 2, ROLE.TROLL, null, 5);
     }
     
     

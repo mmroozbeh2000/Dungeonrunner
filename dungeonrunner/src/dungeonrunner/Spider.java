@@ -6,7 +6,7 @@ import java.awt.Color;
 public class Spider extends Entity{
     
     public Spider() {
-        super(7, 1, 2, 3, null, null, 20);
+        super(7, 1, 2, 3, ROLE.SPIDER, null, 20);
     }
     
        @Override
