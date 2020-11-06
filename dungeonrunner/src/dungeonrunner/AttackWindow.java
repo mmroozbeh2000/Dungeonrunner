@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
@@ -51,6 +52,9 @@ private JPanel barpanel;
 //Constructor
 public AttackWindow(boolean b[], int n, Hanteraren handler){
 super("Battle!");
+super.setBackground(Color.BLACK);
+this.getContentPane().setBackground(Color.BLACK);
+
 setLayout(new GridLayout(3,1));
 this.handler=handler;
 
@@ -58,7 +62,7 @@ this.handler=handler;
 attack = new JButton("Attack");
 flee = new JButton("Flee");
 flee.addActionListener(this);
-
+attack.addActionListener(this);
 //Images
 imageicons = new ImageIcon[4];
 imageicons[0]=new ImageIcon("C:/Javafiler/Spider.png");
@@ -90,7 +94,6 @@ textarea.setEditable(false);
 setPreferredSize(new Dimension(400,400));
 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 setLocationRelativeTo(null);
-setBackground(Color.BLACK);
 setVisible(true);
 
 
@@ -101,11 +104,15 @@ buttonpanel = new JPanel();
 textpanel = new JPanel();
 barpanel = new JPanel();
 
+textpanel.setBackground(Color.BLACK);
+barpanel.setBackground(Color.BLACK);
+buttonpanel.setBackground(Color.BLACK);
+imagepanel.setBackground(Color.BLACK);
+attack.setBackground(Color.WHITE);
+flee.setBackground(Color.WHITE);
 
 
 //Add stuff
-buttonpanel.add(attack);
-buttonpanel.add(flee);
 textpanel.add(textarea);
 
 
@@ -120,11 +127,11 @@ add(imagepanel, BorderLayout.NORTH);
 add(textpanel, BorderLayout.CENTER);
 add(buttonpanel, BorderLayout.SOUTH);
 add(barpanel, BorderLayout.WEST);
+//Start the battle with spider
+beginBattle(this.handler.getSpider(),this.handler.getPlayer());
 pack();
 }
-else if(b[n]==true & n==1) {
-	
-}
+
 
 	
 }
@@ -133,7 +140,93 @@ public void actionPerformed(ActionEvent e) {
 if(e.getSource()==flee) {
 this.dispose();	
 }
+
+else if(e.getSource()==attack) {	
+try {	
+playerAttack(handler.getSpider(), handler.getPlayer());	
+buttonpanel.remove(attack);
+buttonpanel.remove(flee);
+revalidate();
+monsterAttack(handler.getSpider(), handler.getPlayer());
+revalidate();
+
+if(handler.getSpider().getEndurance()<=0) {
+Thread.sleep(500);
+JOptionPane.showMessageDialog(null, "You've slayed the beast!");
+Thread.sleep(500);
+this.dispose();
+}
+}
+catch(Exception ex) {
+ex.printStackTrace();	
+}
+}
 	
 }	
+
+//Begin the battle
+public void beginBattle(Entity spider, Entity player) {
+try {	
+if(player.rollTurnOrder()>=spider.rollTurnOrder()) {
+textarea.setText("It's your turn to attack!");
+buttonpanel.add(attack);	
+buttonpanel.add(flee);
+revalidate();
+}
+else {
+buttonpanel.remove(attack);
+buttonpanel.remove(flee);
+monsterAttack(spider, player);	
+revalidate();
+}
+}
+catch(Exception e) {
+e.printStackTrace();	
+}
+
+}
+public void monsterAttack(Entity spider, Entity player) {
+try {
+if(spider.attackAttempt()>player.dodgeAttempt()) {
+textarea.setText("Spider attack player for" + spider.getAttack() + "Damage!");	
+player.setEndurance(player.getEndurance()-1);
+playerbar.setValue(player.getEndurance());
+playerlabel.setText("Player Endurance:" + Integer.toString(player.getEndurance()));
+buttonpanel.add(attack);
+buttonpanel.add(flee);
+revalidate();
+}	
+else {
+textarea.setText("The spider missed it's attack!");
+beginBattle(handler.getSpider(), handler.getPlayer());
+}
+}
+catch(Exception e) {
+e.printStackTrace();	
+}
+}
+public void playerAttack(Entity spider, Entity player) {
+try {	
+if(player.attackAttempt()>spider.dodgeAttempt()) {
+textarea.setText("Player attacked spider for " + player.getAttack() + " " + "Damage");	
+spider.setEndurance(spider.getEndurance()-1);	
+spiderlabel.setText("Spider Endurance:" +  Integer.toString(spider.getEndurance()));
+spiderbar.setValue(spider.getEndurance());
+buttonpanel.remove(attack);
+buttonpanel.remove(flee);
+revalidate();
+}
+else {
+textarea.setText("The player missed!");
+JOptionPane.showMessageDialog(null, "You missed!");
+Thread.sleep(1000);
+monsterAttack(spider,player);	
+}
+}
+catch(Exception e) {
+e.printStackTrace();	
+}
+}
+
 
 }
