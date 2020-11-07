@@ -1,9 +1,7 @@
 package dungeonrunner;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.util.Random;
 
 public class Thief extends Entity{
     
@@ -43,6 +41,16 @@ public class Thief extends Entity{
 
 public Color getColor() {
 return color;	
+}
+
+public boolean specialAbility() {  //Do 2x critical damage 20% chance.
+Random rand = new Random();
+int randval = rand.nextInt(100)+1;
+if(randval>80) {
+return true;	
+}
+return false;
+
 }
 
 

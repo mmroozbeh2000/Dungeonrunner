@@ -21,13 +21,13 @@ private int y;
 private static final long serialVersionUID = 1L;
 
 
-public drawWindow() {
+public drawWindow(int a, int b) {
 handler= new Hanteraren();
-mapcolumn = new int[4][4];
-maprow = new int[4][4];
-visited = new boolean[4][4];
-monster = new boolean[4];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
-rc = new RoomContent();
+mapcolumn = new int[a][b];
+maprow = new int[b][a];
+visited = new boolean[a][b];
+monster = new boolean[a];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
+rc = new RoomContent(a,b);
 fillRooms(); //Set all rooms to false and fill them with content.
 x=75;
 y=50;	
@@ -132,11 +132,11 @@ if(handler.getPlayer().getX()<mapcolumn[0][0]) {
 	handler.getPlayer().setX(handler.getPlayer().getX()+75);
 this.repaint();
 }
-else if(handler.getPlayer().getX()>mapcolumn[3][3]) {
+else if(handler.getPlayer().getX()>mapcolumn[mapcolumn.length-1][mapcolumn.length-1]) {
 handler.getPlayer().setX(handler.getPlayer().getX()-75);
 repaint();
 }
-else if(handler.getPlayer().getY()>maprow[3][3]) {
+else if(handler.getPlayer().getY()>maprow[maprow.length-1][maprow.length-1]) {
 handler.getPlayer().setY(handler.getPlayer().getY()-40);
 repaint();
 }
@@ -176,6 +176,9 @@ public int checkRooms() {   //Kolla in rummen och returnera en siffra beroende p
 		}
 		else if(rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY())==1) { // if room contains an orc!
 		return 1;	
+		}
+		else if(rc.checkMonster(i, j, handler.getPlayer().getX(),handler.getPlayer().getY())==10) {
+		return 10;	
 		}
 		
 		}

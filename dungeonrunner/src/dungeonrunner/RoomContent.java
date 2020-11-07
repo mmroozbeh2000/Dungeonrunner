@@ -27,19 +27,19 @@ PriorityQueue<JFrame> queue;
 private Random rand;
 private int randval;	
 
-public RoomContent() { // Skapa möjliga rutor för monster
+public RoomContent(int a, int b) { // Skapa möjliga rutor för monster
 handler = new Hanteraren();
 rand = new Random();	
 monster = new boolean[4];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
 queue = new PriorityQueue<>();
-spiderX = new int[4][4];
-spiderY = new int[4][4];
-orcX = new int[4][4];
-orcY = new int[4][4];
-skeletonX = new int[4][4];
-skeletonY = new int[4][4];
-trollX = new int[4][4];
-trollY = new int[4][4];
+spiderX = new int[a][b];
+spiderY = new int[a][b];
+orcX = new int[a][b];
+orcY = new int[a][b];
+skeletonX = new int[a][b];
+skeletonY = new int[a][b];
+trollX = new int[a][b];
+trollY = new int[b][a];
 fillSpiders();
 fillOrcs();
 }
@@ -49,7 +49,7 @@ fillOrcs();
 public void fillSpiders() {
 x=75;
 y=50;	
-for(int i=0;i<4;i++) {
+for(int i=0;i<spiderX.length;i++) {
 x=75;	
 y+=40;	
 for(int j=0;j<4;j++) {
@@ -70,7 +70,7 @@ x+=75;
 public void fillOrcs() {
 	x=75;
 	y=50;	
-	for(int i=0;i<4;i++) {
+	for(int i=0;i<orcX.length;i++) {
 	x=75;	
 	y+=40;	
 	for(int j=0;j<4;j++) {
@@ -108,7 +108,9 @@ handler.newOrc();
 return 1;
 }
 
-
+else if(spiderX[a][b] ==x && spiderY[a][b]==y && orcX[a][b]==x && orcY[a][b]==y) {
+return 10;	
+}
 
 return -1;
 

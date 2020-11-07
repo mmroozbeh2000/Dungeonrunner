@@ -28,7 +28,7 @@ public GameWindow() {
 	
 }
 	
-public GameWindow(int width, int height){	
+public GameWindow(int width, int height, int a, int b){	  //Add values to decide which map
 handler = new Hanteraren();	
 monster = new boolean[4];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
 frame = new JFrame("DungeonRunner");
@@ -39,7 +39,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.setResizable(false);
 frame.setLocationRelativeTo(null);
 frame.setVisible(true);
-dw = new drawWindow();
+dw = new drawWindow(8,8);
 awspider= new AttackWindow();
 aworc = new AttackWindow();
 dw.setFocusable(true);
@@ -48,17 +48,25 @@ awspider.addWindowListener(this);
 aworc.addWindowListener(this);
 frame.addWindowListener(this);
 frame.add(dw);
+frame.pack();
 }
 
 public void initiateBattle(int n) {
 if(n==0) {
 awspider = new AttackWindow(0, handler);
+awspider.addWindowListener(this);
 handler.newSpider();
 }	
 else if(n==1) {
 aworc = new AttackWindow(1, handler);
+aworc.addWindowListener(this);
 handler.newOrc();
 }
+else if(n==10) {
+awspider = new AttackWindow(0,handler);
+aworc = new AttackWindow(1,handler);
+}
+
 }
 
 @Override
@@ -124,14 +132,13 @@ public void windowClosing(WindowEvent e) {
 
 @Override
 public void windowClosed(WindowEvent e) {
-	if(e.getSource()==aworc && handler.getPlayer().getEndurance()>0) {
+	
+	    if(e.getSource()==aworc && handler.getPlayer().getEndurance()<=0) {
 		this.remove(dw);
-		JOptionPane.showMessageDialog(null, "WTF");
 		frame.dispose();
 		}
-		else if(e.getSource()==awspider && handler.getPlayer().getEndurance()>0) {
+		else if(e.getSource()==awspider && handler.getPlayer().getEndurance()<=0) {
 		this.remove(dw);
-		JOptionPane.showMessageDialog(null, "WTF");
 		frame.dispose();
 		}
 			

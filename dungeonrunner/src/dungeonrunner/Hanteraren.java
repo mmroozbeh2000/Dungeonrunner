@@ -9,6 +9,7 @@ public class Hanteraren {
 static Entity Player;	
 static Entity Spider;
 static Entity Orc;
+static boolean playerstatus;
 static List<Entity> Entitylist = new LinkedList<>();	
 List<mapBox> boxlist = new ArrayList<>();
 
@@ -18,13 +19,16 @@ public Hanteraren() {
 
 public void setThief(){
 Player = new Thief();	
+playerstatus=true;
 }
 public void setKnight(){
-Player = new Knight();	
+Player = new Knight();
+playerstatus=true;
 }
 
 public void setMage(){
-Player = new Mage();	
+Player = new Mage();
+playerstatus=true;
 }
 
 public void newSpider(){
@@ -59,6 +63,9 @@ public Entity getEntity(int n){
 return Entitylist.get(n);
 }
 
+public boolean checkPlayer() {
+return playerstatus;
+}
 
 public void removeEntity(int n) {
 Entitylist.remove(n);	

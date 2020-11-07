@@ -186,7 +186,6 @@ if(handler.getSpider().getEndurance()<=0) {
 Thread.sleep(500);
 JOptionPane.showMessageDialog(null, "You've slayed the beast!");
 monsterID=-1;
-Thread.sleep(500);
 this.dispose();
 }
 }
@@ -208,7 +207,7 @@ revalidate();
 if(handler.getOrc().getEndurance()<=0) {
 Thread.sleep(500);
 JOptionPane.showMessageDialog(null, "You've slayed the beast!");
-Thread.sleep(500);
+monsterID=-1;
 this.dispose();
 }
 }
@@ -257,14 +256,15 @@ textarea.setText("Orc attacked player for "+ monster.getAttack() + " " + "Damage
 }
 player.setEndurance(player.getEndurance()-monster.getAttack());
 playerbar.setValue(playerbar.getValue()-20); // Ska uppdateras
-if(player.getEndurance()<=0) {
-JOptionPane.showMessageDialog(null, "You've died!");	
-this.dispose();	  //Stäng ner rutan när man inte har någon tålighet kvar.
-}
 playerlabel.setText("Player Endurance:" + Integer.toString(player.getEndurance()));
 attack.setEnabled(true);
 flee.setEnabled(true);
 revalidate();
+if(player.getEndurance()<=0) {
+JOptionPane.showMessageDialog(null, "You've died!");	
+this.dispose();	  //Stäng ner rutan när man inte har någon tålighet kvar.
+}
+
 }	
 else {
 if(monsterID==0) {	
