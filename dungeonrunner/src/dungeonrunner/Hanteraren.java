@@ -8,6 +8,7 @@ public class Hanteraren {
 
 static Entity Player;	
 static Entity Spider;
+static Entity Orc;
 static List<Entity> Entitylist = new LinkedList<>();	
 List<mapBox> boxlist = new ArrayList<>();
 
@@ -38,7 +39,7 @@ Entitylist.add(new Skeleton());
 }
 
 public void newOrc(){
-Entitylist.add(new Orc());
+Orc = new Orc();
 }
 
 
@@ -47,6 +48,10 @@ return Player;
 }
 public Entity getSpider() {
 return Spider;	
+}
+
+public Entity getOrc() {
+return Orc;	
 }
 
 

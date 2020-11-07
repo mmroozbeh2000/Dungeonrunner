@@ -36,11 +36,12 @@ private JTextArea textarea;
 private JLabel imagelabels[];
 private JLabel playerlabel;
 private JLabel spiderlabel;
+private JLabel orclabel;
 
 //Progressbar
 JProgressBar spiderbar;
 JProgressBar playerbar;
-
+JProgressBar orcbar;
 
 //JPanels
 private JPanel imagepanel;
@@ -48,9 +49,14 @@ private JPanel buttonpanel;
 private JPanel textpanel;
 private JPanel barpanel;
 
-
+//MonsterID
+int monsterID;
 //Constructor
-public AttackWindow(boolean b[], int n, Hanteraren handler){
+public AttackWindow() {
+	
+}
+
+public AttackWindow(int n, Hanteraren handler){
 super("Battle!");
 super.setBackground(Color.BLACK);
 this.getContentPane().setBackground(Color.BLACK);
@@ -65,13 +71,18 @@ flee.addActionListener(this);
 attack.addActionListener(this);
 //Images
 imageicons = new ImageIcon[4];
-imageicons[0]=new ImageIcon("C:/Javafiler/Spider.png");
+imageicons[0]=new ImageIcon("C:/Javafiler/Spider.jpg");
+imageicons[1]=new ImageIcon("C:/Javafiler/Orc.png");
+//Monster ID
+monsterID = n;
 
 //ProgressBars
 spiderbar = new JProgressBar();
+orcbar = new JProgressBar();
 playerbar = new JProgressBar();
 spiderbar.setValue(100);
 playerbar.setValue(100);
+orcbar.setValue(100);
 
 
 //JLabels
@@ -83,7 +94,8 @@ imagelabels[3]= new JLabel(imageicons[3]);
 
 playerlabel = new JLabel();
 playerlabel.setText("Player Endurance:" + Integer.toString(handler.getPlayer().getEndurance()));
-spiderlabel = new JLabel("Spider Endurance" + Integer.toString(handler.getSpider().getEndurance()));
+
+
 
 //Textarea
 textarea = new JTextArea(5,10);
@@ -117,7 +129,8 @@ flee.setBackground(Color.WHITE);
 textpanel.add(textarea);
 
 
-if(b[n]==true&& n==0) {
+if(n==0) {
+spiderlabel = new JLabel("Spider Endurance" + Integer.toString(handler.getSpider().getEndurance()));	
 imagepanel.add(imagelabels[0]);
 barpanel.add(playerlabel);
 barpanel.add(playerbar);
@@ -133,6 +146,23 @@ beginBattle(this.handler.getSpider(),this.handler.getPlayer());
 pack();
 }
 
+if(n==1) {
+orclabel = new JLabel("Orc Endurance" + Integer.toString(handler.getOrc().getEndurance()));
+imagepanel.add(imagelabels[1]);
+barpanel.add(playerlabel);
+barpanel.add(playerbar);
+barpanel.add(orclabel);
+barpanel.add(orcbar);
+
+add(imagepanel, BorderLayout.NORTH);
+add(textpanel, BorderLayout.CENTER);
+add(buttonpanel, BorderLayout.SOUTH);
+add(barpanel, BorderLayout.WEST);
+//Start the battle with orc
+beginBattle(this.handler.getOrc(), this.handler.getPlayer());
+pack();
+}
+
 
 	
 }
@@ -142,16 +172,40 @@ if(e.getSource()==flee) {
 this.dispose();	
 }
 
-else if(e.getSource()==attack) {	
+else if(e.getSource()==attack&&monsterID ==0) {	
 try {	
-playerAttack(handler.getSpider(), handler.getPlayer());	
-buttonpanel.remove(attack);
-buttonpanel.remove(flee);
+playerAttack(handler.getSpider(), handler.getPlayer(), monsterID);	
+attack.setEnabled(false);
+flee.setEnabled(false);
 revalidate();
-monsterAttack(handler.getSpider(), handler.getPlayer());
+Thread.sleep(500);
+monsterAttack(handler.getSpider(), handler.getPlayer(),monsterID);
 revalidate();
 
 if(handler.getSpider().getEndurance()<=0) {
+Thread.sleep(500);
+JOptionPane.showMessageDialog(null, "You've slayed the beast!");
+monsterID=-1;
+Thread.sleep(500);
+this.dispose();
+}
+}
+catch(Exception ex) {
+ex.printStackTrace();	
+}
+}
+
+else if(e.getSource()==attack&&monsterID ==1) {	
+try {	
+playerAttack(handler.getOrc(), handler.getPlayer(), monsterID);	
+attack.setEnabled(false);
+flee.setEnabled(false);
+revalidate();
+Thread.sleep(500);
+monsterAttack(handler.getOrc(), handler.getPlayer(),monsterID);
+revalidate();
+
+if(handler.getOrc().getEndurance()<=0) {
 Thread.sleep(500);
 JOptionPane.showMessageDialog(null, "You've slayed the beast!");
 Thread.sleep(500);
@@ -163,22 +217,27 @@ ex.printStackTrace();
 }
 }
 	
+	
 }	
 
 //Begin the battle
-public void beginBattle(Entity spider, Entity player) {
+public void beginBattle(Entity monster, Entity player) {
+buttonpanel.add(attack);
+buttonpanel.add(flee);	
 try {	
-if(player.rollTurnOrder()>=spider.rollTurnOrder()) {
+if(player.rollTurnOrder()>=monster.rollTurnOrder()) {
 textarea.setText("It's your turn to attack!");
-buttonpanel.add(attack);	
-buttonpanel.add(flee);
+attack.setEnabled(true);
+attack.setEnabled(true);
 revalidate();
 }
 else {
 textarea.setText("Spider begins to attack!");	
-buttonpanel.remove(attack);
-buttonpanel.remove(flee);
-monsterAttack(spider, player);	
+attack.setEnabled(false);
+flee.setEnabled(false);
+monsterAttack(monster, player, monsterID);	
+attack.setEnabled(true);
+flee.setEnabled(true);
 revalidate();
 }
 }
@@ -187,42 +246,70 @@ e.printStackTrace();
 }
 
 }
-public void monsterAttack(Entity spider, Entity player) {
+public void monsterAttack(Entity monster, Entity player, int monsterID) {
 try {
-if(spider.attackAttempt()>player.dodgeAttempt()) {
-textarea.setText("Spider attack player for:" + spider.getAttack() + " " + "Damage!");	
-player.setEndurance(player.getEndurance()-spider.getAttack());
+if(monster.attackAttempt()>player.dodgeAttempt()) {
+if(monsterID==0) {	
+textarea.setText("Spider attack player for:" + monster.getAttack() + " " + "Damage!");	
+}
+else if(monsterID==1) {
+textarea.setText("Orc attacked player for "+ monster.getAttack() + " " + "Damage!");	
+}
+player.setEndurance(player.getEndurance()-monster.getAttack());
 playerbar.setValue(playerbar.getValue()-20); // Ska uppdateras
+if(player.getEndurance()<=0) {
+JOptionPane.showMessageDialog(null, "You've died!");	
+this.dispose();	  //Stäng ner rutan när man inte har någon tålighet kvar.
+}
 playerlabel.setText("Player Endurance:" + Integer.toString(player.getEndurance()));
-buttonpanel.add(attack);
-buttonpanel.add(flee);
+attack.setEnabled(true);
+flee.setEnabled(true);
 revalidate();
 }	
 else {
+if(monsterID==0) {	
 textarea.setText("The spider missed it's attack!");
-beginBattle(handler.getSpider(), handler.getPlayer());
+}
+else if(monsterID==1) {
+textarea.setText("Orc missed it's attack!");	
+}
+beginBattle(monster, player);
 }
 }
 catch(Exception e) {
 e.printStackTrace();	
 }
+
 }
-public void playerAttack(Entity spider, Entity player) {
+public void playerAttack(Entity monster, Entity player,int monsterID) {
 try {	
-if(player.attackAttempt()>spider.dodgeAttempt()) {
+if(player.attackAttempt()>monster.dodgeAttempt()) {
+if(monsterID==0) {	
 textarea.setText("Player attacked spider for " + player.getAttack() + " " + "Damage");	
-spider.setEndurance(spider.getEndurance()-1);	
-spiderlabel.setText("Spider Endurance:" +  Integer.toString(spider.getEndurance()));
-spiderbar.setValue(spider.getEndurance());
-buttonpanel.remove(attack);
-buttonpanel.remove(flee);
+}
+else if(monsterID==1) {
+textarea.setText("Player attacked orc for" + player.getAttack() + " " + "Damage");	
+}
+monster.setEndurance(monster.getEndurance()-1);	
+if(monsterID==0) {
+spiderlabel.setText("Spider Endurance:" +  Integer.toString(monster.getEndurance()));
+spiderbar.setValue(monster.getEndurance());
+}
+else if(monsterID==1) {
+orclabel.setText("Orc Endurance:" + Integer.toString(monster.getEndurance()));
+orcbar.setValue(monster.getEndurance());
+}
+attack.setEnabled(false);
+flee.setEnabled(false);
 revalidate();
 }
 else {
 textarea.setText("The player missed!");
 JOptionPane.showMessageDialog(null, "You missed!");
-Thread.sleep(1000);
-monsterAttack(spider,player);	
+attack.setEnabled(false);
+flee.setEnabled(false);
+revalidate();
+monsterAttack(monster,player, monsterID);	
 }
 }
 catch(Exception e) {

@@ -1,13 +1,17 @@
 package dungeonrunner;
 
+import java.awt.Frame;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.PriorityQueue;
 import java.util.Random;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class RoomContent {
+public class RoomContent{
 
-private Hanteraren handler;	
-private AttackWindow aw;
+private Hanteraren handler;
 private int x;
 private int y;
 private boolean monster[];
@@ -19,7 +23,7 @@ private int skeletonX[][];
 private int skeletonY[][];
 private int trollX[][];
 private int trollY[][];
-
+PriorityQueue<JFrame> queue;
 private Random rand;
 private int randval;	
 
@@ -27,7 +31,7 @@ public RoomContent() { // Skapa möjliga rutor för monster
 handler = new Hanteraren();
 rand = new Random();	
 monster = new boolean[4];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
-
+queue = new PriorityQueue<>();
 spiderX = new int[4][4];
 spiderY = new int[4][4];
 orcX = new int[4][4];
@@ -37,6 +41,7 @@ skeletonY = new int[4][4];
 trollX = new int[4][4];
 trollY = new int[4][4];
 fillSpiders();
+fillOrcs();
 }
 
 
@@ -50,7 +55,7 @@ y+=40;
 for(int j=0;j<4;j++) {
 randval = rand.nextInt(100)+1;
 
-if(randval>=80 && !getTrolls(i,j) &&!getSkeletons(i,j) &&!getOrcs(i,j) ) {
+if(randval>=50 ) {
 //Spider added to specific coordinates	
 spiderX[i][j]=x;
 spiderY[i][j]=y;
@@ -63,7 +68,22 @@ x+=75;
 
 
 public void fillOrcs() {
-	
+	x=75;
+	y=50;	
+	for(int i=0;i<4;i++) {
+	x=75;	
+	y+=40;	
+	for(int j=0;j<4;j++) {
+	randval = rand.nextInt(100)+1;
+
+	if(randval>=50 ) {
+	//Orc added to specific coordinates	
+	orcX[i][j]=x;
+	orcY[i][j]=y;
+	x+=75;	
+	}
+	}	
+	}
 }
 
 
@@ -74,18 +94,23 @@ public void addSpider(int a, int b) {
 
 
 
-public void checkMonster(int a, int b, int x, int y) {
+public int checkMonster(int a, int b, int x, int y) {
 //If room contains a spider	
 if(spiderX[a][b] ==x && spiderY[a][b]==y) {
-JOptionPane.showMessageDialog(null, "Omg a spider!");	
-monster[0]=true;
 handler.newSpider();
-aw = new AttackWindow(monster, 0, handler);	
+return 0;
 }
 
-else if(orcX[a][b]==x&& orcY[a][b]==y) {
-	
+
+//if Room contains an orc
+if(orcX[a][b]==x && orcY[a][b]==y) {
+handler.newOrc();
+return 1;
 }
+
+
+
+return -1;
 
 }
 
@@ -122,7 +147,12 @@ if(trollX[a][b]>0 && trollY[a][b]>0) {
 return true;	
 }
 return false;
-}	
+}
+
+public boolean getMonster(int n) {
+return monster[n];	
+}
+
 
 
 

@@ -92,7 +92,9 @@ else if(e.getSource()==loadcharacter) {
 	 this.dispose();
 }
 }
-
+public void setWindow(int n, boolean b) {
+whichwindow[n]=b;	
+}
 
 public boolean getWindow(int n) {
 return whichwindow[n];	

@@ -7,6 +7,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.JOptionPane;
+
 
 
 
@@ -28,6 +30,7 @@ public static final int HEIGHT = WIDTH / 12 *9;  //480
 public TryIt() {
 	mw = new MenuWindow();
 	mw.addWindowListener(this);
+	
 }
 
 
@@ -38,12 +41,7 @@ public TryIt() {
 
 
 public static void main(String[] args) {
-		
-		
 new TryIt();
-	   
-	 
-
 }
 	
 	
@@ -72,17 +70,19 @@ public void windowClosing(WindowEvent e) {
 	@Override
 public void windowClosed(WindowEvent e) {
 if(e.getSource()==cs) {
-			
 gw = new GameWindow(HEIGHT,WIDTH);
-			
-			
-		  
-			
+gw.getFrame().addWindowListener(this);
 }
 		
 else if(e.getSource()==mw && mw.getWindow(1)==true) {
 cs = new CharacterScreen();
 cs.addWindowListener(this);
+mw.setWindow(1, false);
+}
+
+else if(e.getSource()==gw.getFrame()) {
+mw = new MenuWindow();	
+mw.addWindowListener(this);
 }
 		
 }

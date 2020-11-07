@@ -3,7 +3,6 @@ package dungeonrunner;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -11,6 +10,7 @@ public class drawWindow extends JPanel{
 private Hanteraren handler;
 private RoomContent rc;   //All the room contents;
 private boolean[][] visited;
+private boolean[] monster;
 private int [][] mapcolumn;
 private int[][] maprow;
 private int x;
@@ -26,6 +26,7 @@ handler= new Hanteraren();
 mapcolumn = new int[4][4];
 maprow = new int[4][4];
 visited = new boolean[4][4];
+monster = new boolean[4];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
 rc = new RoomContent();
 fillRooms(); //Set all rooms to false and fill them with content.
 x=75;
@@ -167,22 +168,23 @@ rc.addSpider(i, j);
 
 }
 
-public boolean checkRoom(int a, int b) {   //Kolla in rummet.
-if(visited[a][b] ==true) {
-return true;
-}
-return false;
-}
-
-public void checkRooms() {   //Kolla in rummen
+public int checkRooms() {   //Kolla in rummen och returnera en siffra beroende på vilket monster som finns.
 	for(int i =0;i< mapcolumn.length;i++) {
 		for(int j=0;j<mapcolumn.length;j++) {
-		rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY());
+		if(rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY())==0) {  //If room contains a spider
+		return 0;
+		}
+		else if(rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY())==1) { // if room contains an orc!
+		return 1;	
+		}
 		
 		}
+		
 		}
 	
+return -1;			
 }
+
 }
 
 
