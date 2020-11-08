@@ -2,6 +2,7 @@ package dungeonrunner;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -13,6 +14,13 @@ private boolean[][] visited;
 private boolean[] monster;
 private int [][] mapcolumn;
 private int[][] maprow;
+private int[][] map;
+private int[] mapY;
+private int[] mapX;
+//Exit point
+private int exitpointX[][];
+private int exitpointY[][];
+
 private int x;
 private int y;
 /**
@@ -23,11 +31,17 @@ private static final long serialVersionUID = 1L;
 
 public drawWindow(int a, int b) {
 handler= new Hanteraren();
+map = new int[a][b];
 mapcolumn = new int[a][b];
 maprow = new int[b][a];
+mapY = new int[a];
+mapX= new int[b];
 visited = new boolean[a][b];
 monster = new boolean[a];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
 rc = new RoomContent(a,b);
+//Exit point
+exitpointX= new int[a][b];
+exitpointY = new int[a][b];
 fillRooms(); //Set all rooms to false and fill them with content.
 x=75;
 y=50;	
@@ -36,6 +50,7 @@ System.out.println(handler.getPlayer());
 handler.getPlayer().setX(mapcolumn[3][3]);
 handler.getPlayer().setY(maprow[3][3]);
 System.out.println(handler.getPlayer().getName());
+printValues();
 }
 
 
@@ -57,22 +72,27 @@ for(int z=0;z<mapcolumn.length;z++) {
 for(int j=0;j<mapcolumn.length;j++) {
 
 g.setColor(Color.WHITE);
-g.fillRect(mapcolumn[z][j], maprow[z][j], 35, 35);
+g.fillRect(mapX[j], mapY[z], 35, 35);
 g.setColor(handler.getPlayer().getColor());
 g.fillRect(handler.getPlayer().getX(),handler.getPlayer().getY() ,35, 35);
+
 }	
 
 }
 }
 //Fyll kartan med X och Y värden
 public void fillMap(){
+Random rand = new Random();
+int randval = rand.nextInt(4)+1;
 for(int z=0;z<mapcolumn.length;z++) {	
 x=75;	
 y+=40;
 for(int j=0;j<mapcolumn.length;j++) {
+mapY[z]=y;
+mapX[j]=x;
 mapcolumn[z][j]=x;
 maprow[z][j]=y;	
-x+=75;		
+x+=75;
 }
 }
 }
@@ -83,7 +103,8 @@ System.out.println();
 for(int j=0;j<mapcolumn.length;j++) {
 
 
-System.out.print(maprow[i][j] + "\t");
+System.out.print(mapcolumn[i][j] + "\t");
+
 }	
 }
 
@@ -129,7 +150,7 @@ return maprow[a][b];
 
 public void clamp() {   //Så att spelaren inte kan gå utanför dimensionen.
 if(handler.getPlayer().getX()<mapcolumn[0][0]) {
-	handler.getPlayer().setX(handler.getPlayer().getX()+75);
+handler.getPlayer().setX(handler.getPlayer().getX()+75);
 this.repaint();
 }
 else if(handler.getPlayer().getX()>mapcolumn[mapcolumn.length-1][mapcolumn.length-1]) {
@@ -161,7 +182,6 @@ public void fillRooms() {
 for(int i =0;i< visited.length;i++) {
 for(int j=0;j<visited.length;j++) {
 visited[i][j]=false;	
-rc.addSpider(i, j);
 }
 
 }
@@ -177,7 +197,7 @@ public int checkRooms() {   //Kolla in rummen och returnera en siffra beroende p
 		else if(rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY())==1) { // if room contains an orc!
 		return 1;	
 		}
-		else if(rc.checkMonster(i, j, handler.getPlayer().getX(),handler.getPlayer().getY())==10) {
+		else if(rc.checkMonster(i, j, handler.getPlayer().getX(),handler.getPlayer().getY())==10) {  //If room contains an orc and a spider 1+0 = 10.
 		return 10;	
 		}
 		
@@ -187,6 +207,8 @@ public int checkRooms() {   //Kolla in rummen och returnera en siffra beroende p
 	
 return -1;			
 }
+
+
 
 }
 

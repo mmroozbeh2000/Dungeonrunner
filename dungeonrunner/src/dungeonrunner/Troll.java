@@ -35,6 +35,20 @@ public class Troll extends Entity{
     public Color getColor() {
     return color;	
     }
+
+
+	@Override
+	public boolean specialAbility() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void setspecialAbility(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }
     

@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 
 public class Knight extends Entity{
     
+private boolean block=true;	
     public Knight() {
         super(5, 9, 6, 4,ROLE.KNIGHT, Color.BLUE);
     }
@@ -41,6 +42,19 @@ public Color getColor() {
 return color;	
 }
 
+
+@Override
+public boolean specialAbility() {
+
+return block;
+}
+
+
+@Override
+public void setspecialAbility(boolean b) {
+block = b;
+	
+}
         
     
 }

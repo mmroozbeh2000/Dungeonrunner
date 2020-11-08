@@ -39,7 +39,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.setResizable(false);
 frame.setLocationRelativeTo(null);
 frame.setVisible(true);
-dw = new drawWindow(8,8);
+dw = new drawWindow(5,5);
 awspider= new AttackWindow();
 aworc = new AttackWindow();
 dw.setFocusable(true);

@@ -57,7 +57,8 @@ public abstract class Entity {
 
     public abstract void setY(int y);
     public abstract void setX(int x);
-  
+    public abstract boolean specialAbility();
+    public abstract void setspecialAbility(boolean b);
 
     public void setScore(double d) {
     this.score=d;	
@@ -177,5 +178,9 @@ public abstract class Entity {
         return escapeSuccesfull;
 
     }
+    
+   
+    	
+ 
     
 }

@@ -2,18 +2,18 @@ package dungeonrunner;
 
 public class Skatter {
 	
-	
-    public static void main(String[] args) {
-        int score = 0;
-        score = skatt(score);
-        System.out.println(score);
-    }
+
     
-    public static int randomHundred() {
+    public int randomHundred() {
         return (int)(Math.random() * 100 + 1);
     }
     
-    public static int skatt(int score) {
+/*Skulle vilja göra om skatterna till en klass där varje typ av skatt har ett specifikt score värde.
+t.ex getGold(), getCoin(), getcoinPurse().
+   
+*/
+    
+    public int skatt(int score) {
         if(randomHundred() <= 40) {
             System.out.println("Hittade Lösa Slantar!");
             score = score + 2;

@@ -54,6 +54,13 @@ return false;
 }
 
 
+@Override
+public void setspecialAbility(boolean b) {
+	// TODO Auto-generated method stub
+	
+}
+
+
 	
 	        
 	

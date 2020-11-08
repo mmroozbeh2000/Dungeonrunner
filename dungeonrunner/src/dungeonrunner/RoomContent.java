@@ -15,6 +15,10 @@ private Hanteraren handler;
 private int x;
 private int y;
 private boolean monster[];
+private int mapsize[][];
+
+		
+//Monster på kartan
 private int spiderX[][];
 private int spiderY[][];
 private int orcX[][];
@@ -23,6 +27,19 @@ private int skeletonX[][];
 private int skeletonY[][];
 private int trollX[][];
 private int trollY[][];
+///
+//Skatter på kartan
+private int coinX[][];
+private int coinY[][];
+private int coinpurseX[][];
+private int coinpurseY[][];
+private int goldX[][];
+private int goldY[][];
+private int treasurechestX[][];
+private int treasurechestY[][];
+private int jewelryX[][];
+private int jewelryY[][];
+
 PriorityQueue<JFrame> queue;
 private Random rand;
 private int randval;	
@@ -31,7 +48,10 @@ public RoomContent(int a, int b) { // Skapa möjliga rutor för monster
 handler = new Hanteraren();
 rand = new Random();	
 monster = new boolean[4];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
+mapsize = new int[a][b];
 queue = new PriorityQueue<>();
+//
+//Monster
 spiderX = new int[a][b];
 spiderY = new int[a][b];
 orcX = new int[a][b];
@@ -40,22 +60,134 @@ skeletonX = new int[a][b];
 skeletonY = new int[a][b];
 trollX = new int[a][b];
 trollY = new int[b][a];
+//Skatter
+coinX = new int[a][b];
+coinY= new int[a][b];
+coinpurseX = new int[a][b];
+coinpurseY= new int[a][b];
+goldX = new int[a][b];
+goldY = new int[a][b];
+jewelryX = new int[a][b];
+jewelryY= new int[a][b];
+treasurechestX = new int[a][b];
+treasurechestY = new int[a][b];
+//Fill treasures
+fillCoin();
+fillcoinPurse();
+fillChest();
+fillJewelry();
+fillGold();
+//Fill monsters
 fillSpiders();
 fillOrcs();
 }
 
 
+public void fillCoin() {
+x=75;
+y=50;	
+for(int i=0;i<mapsize.length;i++) {
+x=75;	
+y+=40;	
+for(int j=0;j<mapsize.length;j++) {
+randval = rand.nextInt(100)+1;
 
+if(randval<=40 ) {
+coinX[i][j]=x;	
+coinY[i][j]=y;
+x+=75;	
+}
+}	
+}
+}	
+
+public void fillJewelry() {
+x=75;
+y=50;	
+for(int i=0;i<mapsize.length;i++) {
+x=75;	
+y+=40;	
+for(int j=0;j<mapsize.length;j++) {
+randval = rand.nextInt(100)+1;
+
+if(randval<=510) {
+jewelryX[i][j]=x;	
+jewelryY[i][j]=y;
+x+=75;	
+}
+}
+}
+}
+
+public void fillcoinPurse() {
+x=75;
+y=50;	
+for(int i=0;i<mapsize.length;i++) {
+x=75;	
+y+=40;	
+for(int j=0;j<mapsize.length;j++) {
+randval = rand.nextInt(100)+1;
+
+if(randval<=40 ) {
+coinpurseX[i][j]=x;	
+coinpurseY[i][j]=y;
+x+=75;	
+}
+}
+}
+
+}
+
+
+public void fillChest() {
+x=75;
+y=50;	
+for(int i=0;i<mapsize.length;i++) {
+x=75;	
+y+=40;	
+for(int j=0;j<mapsize.length;j++) {
+randval = rand.nextInt(100)+1;
+
+if(randval<=5 ) {
+treasurechestX[i][j]=x;	
+treasurechestY[i][j]=y;
+x+=75;	
+}
+}
+}
+}
+
+
+
+
+
+public void fillGold() {
+x=75;
+y=50;	
+for(int i=0;i<mapsize.length;i++) {
+x=75;	
+y+=40;	
+for(int j=0;j<mapsize.length;j++) {
+randval = rand.nextInt(100)+1;
+
+if(randval<=15 ) {
+goldX[i][j]=x;	
+goldY[i][j]=y;
+x+=75;	
+}
+}
+}
+}
 public void fillSpiders() {
 x=75;
 y=50;	
-for(int i=0;i<spiderX.length;i++) {
+for(int i=0;i<mapsize.length;i++) {
 x=75;	
 y+=40;	
-for(int j=0;j<4;j++) {
+for(int j=0;j<mapsize.length;j++) {
 randval = rand.nextInt(100)+1;
 
-if(randval>=50 ) {
+if(randval>=80 ) {
 //Spider added to specific coordinates	
 spiderX[i][j]=x;
 spiderY[i][j]=y;
@@ -66,17 +198,16 @@ x+=75;
 }
 
 
-
 public void fillOrcs() {
 	x=75;
 	y=50;	
-	for(int i=0;i<orcX.length;i++) {
+	for(int i=0;i<mapsize.length;i++) {
 	x=75;	
 	y+=40;	
-	for(int j=0;j<4;j++) {
+	for(int j=0;j<mapsize.length;j++) {
 	randval = rand.nextInt(100)+1;
 
-	if(randval>=50 ) {
+	if(randval<=10 ) {
 	//Orc added to specific coordinates	
 	orcX[i][j]=x;
 	orcY[i][j]=y;
@@ -84,6 +215,8 @@ public void fillOrcs() {
 	}
 	}	
 	}
+	
+	
 }
 
 
