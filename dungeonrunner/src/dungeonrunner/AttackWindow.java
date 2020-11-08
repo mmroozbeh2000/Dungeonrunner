@@ -185,7 +185,7 @@ Thread.sleep(500);
 monsterAttack(handler.getSpider(), handler.getPlayer(),monsterID);
 revalidate();
 
-if(handler.getSpider().getEndurance()<=0) {
+if(handler.getSpider().getEndurance()<=0&&handler.checkPlayer()==true) {
 Thread.sleep(500);
 JOptionPane.showMessageDialog(null, "You've slayed the beast!");
 monsterID=-1;
@@ -205,7 +205,7 @@ Thread.sleep(500);
 monsterAttack(handler.getOrc(), handler.getPlayer(),monsterID);
 revalidate();
 
-if(handler.getOrc().getEndurance()<=0) {
+if(handler.getOrc().getEndurance()<=0&&handler.checkPlayer()==true) {
 Thread.sleep(500);
 JOptionPane.showMessageDialog(null, "You've slayed the beast!");
 handler.getPlayer().setspecialAbility(true);
@@ -279,6 +279,7 @@ flee.setEnabled(true);
 revalidate();
 if(player.getEndurance()<=0) {
 JOptionPane.showMessageDialog(null, "You've died!");	
+handler.setplayerStatus(false);
 this.dispose();	  //Stäng ner rutan när man inte har någon tålighet kvar.
 }
 }

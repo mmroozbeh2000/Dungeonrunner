@@ -2,12 +2,16 @@ package dungeonrunner;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JOptionPane;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 
 
 
@@ -21,6 +25,7 @@ public class TryIt extends Canvas implements WindowListener{
 private static final long serialVersionUID = 1L;
 	
 private static int Mapsize=4;
+private Hanteraren handler;
 private MenuWindow mw;  //Start menu
 private CharacterScreen cs; //Character screen
 private GameWindow gw; // GameWindow holding drawmap;
@@ -29,6 +34,8 @@ public static final int WIDTH= 1000;
 public static final int HEIGHT = WIDTH / 12 *9;  //480
 
 public TryIt() {
+	handler = new Hanteraren();
+	gw = new GameWindow();
 	mw = new MenuWindow();
 	mw.addWindowListener(this);
 	
@@ -94,13 +101,13 @@ mp.addWindowListener(this);
 Mapsize = mp.getMap();
 }
 
-else if(e.getSource()==gw.getFrame()) {  //If player exits map or dies, go to main screen.
+else if(e.getSource()==gw.getFrame()&&handler.checkPlayer()==false) {  //If player exits map or dies, go to main screen.
 mw = new MenuWindow();	
 mw.addWindowListener(this);
 }
 
 else if(e.getSource()==mp) {
-JOptionPane.showMessageDialog(null, "WTF");
+Mapsize = mp.getMap();
 mw=new MenuWindow();	
 mw.revalidate();
 mw.addWindowListener(this);

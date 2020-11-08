@@ -19,10 +19,10 @@ private int mapsize[][];
 
 		
 //Monster på kartan
-private int spiderX[][];
-private int spiderY[][];
-private int orcX[][];
-private int orcY[][];
+private int spiderX[];
+private int spiderY[];
+private int orcX[];
+private int orcY[];
 private int skeletonX[][];
 private int skeletonY[][];
 private int trollX[][];
@@ -52,10 +52,10 @@ mapsize = new int[a][b];
 queue = new PriorityQueue<>();
 //
 //Monster
-spiderX = new int[a][b];
-spiderY = new int[a][b];
-orcX = new int[a][b];
-orcY = new int[a][b];
+spiderX = new int[a];
+spiderY = new int[b];
+orcX = new int[b];
+orcY = new int[a];
 skeletonX = new int[a][b];
 skeletonY = new int[a][b];
 trollX = new int[a][b];
@@ -189,8 +189,8 @@ randval = rand.nextInt(100)+1;
 
 if(randval>=80 ) {
 //Spider added to specific coordinates	
-spiderX[i][j]=x;
-spiderY[i][j]=y;
+spiderX[j]=x;
+spiderY[i]=y;
 x+=75;	
 }
 }	
@@ -207,10 +207,10 @@ public void fillOrcs() {
 	for(int j=0;j<mapsize.length;j++) {
 	randval = rand.nextInt(100)+1;
 
-	if(randval<=10 ) {
+	if(randval>=10 ) {
 	//Orc added to specific coordinates	
-	orcX[i][j]=x;
-	orcY[i][j]=y;
+	orcX[j]=x;
+	orcY[i]=y;
 	x+=75;	
 	}
 	}	
@@ -229,19 +229,19 @@ public void addSpider(int a, int b) {
 
 public int checkMonster(int a, int b, int x, int y) {
 //If room contains a spider	
-if(spiderX[a][b] ==x && spiderY[a][b]==y) {
+if(spiderX[b] ==x && spiderY[a]==y) {
 handler.newSpider();
 return 0;
 }
 
 
 //if Room contains an orc
-if(orcX[a][b]==x && orcY[a][b]==y) {
+if(orcX[b]==x && orcY[a]==y) {
 handler.newOrc();
 return 1;
 }
 
-else if(spiderX[a][b] ==x && spiderY[a][b]==y && orcX[a][b]==x && orcY[a][b]==y) {
+else if(spiderX[b]==x && spiderY[a]==y && orcX[b]==x && orcY[a]==y) {
 return 10;	
 }
 
@@ -250,19 +250,19 @@ return -1;
 }
 
 public void removeSpider(int a, int b) {
-spiderX[a][b]=0;
-spiderY[a][b]=0;
+spiderX[a]=0;
+spiderY[b]=0;
 }
 
 public boolean getOrcs(int a, int b) {
-if(orcX[a][b]>0 && orcY[a][b]>0) {
+if(orcX[b]>0 && orcY[a]>0) {
 return true;	
 }
 return false;
 }
 
 public boolean getSpiders(int a, int b) {
-if(spiderX[a][b]>0 && spiderY[a][b]>0) {
+if(spiderX[a]>0 && spiderY[b]>0) {
 return true;	
 }
 return false;

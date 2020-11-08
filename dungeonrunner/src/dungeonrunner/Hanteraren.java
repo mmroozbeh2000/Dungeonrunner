@@ -46,6 +46,9 @@ public void newOrc(){
 Orc = new Orc();
 }
 
+public void setplayerStatus(boolean b) {
+playerstatus=b;	
+}
 
 public Entity getPlayer(){
 return Player;	
@@ -65,6 +68,10 @@ return Entitylist.get(n);
 
 public boolean checkPlayer() {
 return playerstatus;
+}
+
+public void removePlayer() {
+Player=null;
 }
 
 public void removeEntity(int n) {

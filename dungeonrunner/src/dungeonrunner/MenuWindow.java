@@ -3,6 +3,7 @@ package dungeonrunner;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 
 public class MenuWindow extends JFrame implements ActionListener {
 
@@ -73,6 +77,15 @@ loadcharacter.addActionListener(this);
 createcharacter.addActionListener(this);
 startgame.addActionListener(this);
 
+//Random
+UIDefaults uiDefaults = UIManager.getDefaults();
+uiDefaults.put("activeCaption", new javax.swing.plaf.ColorUIResource(Color.BLACK));
+uiDefaults.put("activeCaptionText", new javax.swing.plaf.ColorUIResource(Color.GREEN));
+UIManager.put("InternalFrame.activeTitleBackground", new ColorUIResource(Color.BLUE ));
+UIManager.put("InternalFrame.activeTitleForeground", new ColorUIResource(Color.GREEN));
+UIManager.put("InternalFrame.titleFont", new Font("Dialog", Font.PLAIN, 15));
+setDefaultLookAndFeelDecorated(true);
+
 //Add stuff
 buttonpanel.add(selectmap);
 buttonpanel.add(createcharacter);
@@ -113,7 +126,7 @@ this.dispose();
 }
 
 else if(e.getSource()==startgame && handler.checkPlayer()==false) {
-JOptionPane.showMessageDialog(null, "You must create a character and select a map first!");	
+JOptionPane.showMessageDialog(null, "You must create a character first!");	
 }
 
 else if(e.getSource()==startgame && handler.checkPlayer()==true) {
