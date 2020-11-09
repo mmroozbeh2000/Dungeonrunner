@@ -118,14 +118,15 @@ Charname = new JLabel("Please enter your name");
 
 //Colors
 charpanel.setBackground(Color.BLACK);
-create.setBackground(Color.GREEN);
+create.setBackground(Color.ORANGE);
 buttonpanel.setBackground(Color.BLACK);
 Charname.setBackground(Color.WHITE);
 textpanel.setBackground(Color.BLACK);
 
+setLocationRelativeTo(null);
 
 add(charpanel);
-pack();
+
 //Add buttons
 
 
@@ -147,6 +148,7 @@ buttonpanel.add(Charname);
 buttonpanel.add(Chartext);
 buttonpanel.add(create);
 add(buttonpanel,BorderLayout.CENTER);
+pack();
 
 
 

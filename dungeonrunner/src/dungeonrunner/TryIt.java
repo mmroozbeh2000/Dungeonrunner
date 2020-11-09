@@ -1,23 +1,21 @@
 package dungeonrunner;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.image.BufferStrategy;
 
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.text.Style;
 
 
 
 
 
-public class TryIt extends Canvas implements WindowListener{
+public class TryIt extends JFrame implements WindowListener{
 	
 /**
 	 * 
@@ -34,6 +32,14 @@ public static final int WIDTH= 1000;
 public static final int HEIGHT = WIDTH / 12 *9;  //480
 
 public TryIt() {
+	
+	UIDefaults uiDefaults = UIManager.getDefaults();
+	uiDefaults.put("activeCaption", new javax.swing.plaf.ColorUIResource(Color.BLACK));
+	uiDefaults.put("activeCaptionText", new javax.swing.plaf.ColorUIResource(Color.ORANGE));
+	UIManager.put("InternalFrame.activeTitleBackground", new ColorUIResource(Color.BLUE ));
+	UIManager.put("InternalFrame.activeTitleForeground", new ColorUIResource(Color.ORANGE));
+	UIManager.put("InternalFrame.titleFont", new Font("Dialog", Font.PLAIN, 15));
+	setDefaultLookAndFeelDecorated(true);
 	handler = new Hanteraren();
 	gw = new GameWindow();
 	mw = new MenuWindow();
@@ -79,7 +85,7 @@ public void windowClosing(WindowEvent e) {
 	@Override
 public void windowClosed(WindowEvent e) {    //If player has selected a map and created a character and pressed start, start the game
 if(e.getSource()==mw && mw.getStatus()==true) {
-gw = new GameWindow(HEIGHT,WIDTH, Mapsize, Mapsize);
+gw = new GameWindow(HEIGHT,WIDTH, Mapsize);
 gw.getFrame().addWindowListener(this);
 }
 

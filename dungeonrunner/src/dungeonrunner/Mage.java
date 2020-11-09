@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Mage extends Entity{
 
     public Mage() {
-        super(6, 4, 9, 5,ROLE.MAGE, Color.YELLOW);
+        super(6, 4, 9, 5,ROLE.MAGE, Color.YELLOW,1);
     }
     
     //Unik eftersom trollkarlens passive påverkar flyförsöket

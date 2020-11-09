@@ -78,13 +78,7 @@ createcharacter.addActionListener(this);
 startgame.addActionListener(this);
 
 //Random
-UIDefaults uiDefaults = UIManager.getDefaults();
-uiDefaults.put("activeCaption", new javax.swing.plaf.ColorUIResource(Color.BLACK));
-uiDefaults.put("activeCaptionText", new javax.swing.plaf.ColorUIResource(Color.GREEN));
-UIManager.put("InternalFrame.activeTitleBackground", new ColorUIResource(Color.BLUE ));
-UIManager.put("InternalFrame.activeTitleForeground", new ColorUIResource(Color.GREEN));
-UIManager.put("InternalFrame.titleFont", new Font("Dialog", Font.PLAIN, 15));
-setDefaultLookAndFeelDecorated(true);
+
 
 //Add stuff
 buttonpanel.add(selectmap);
@@ -93,9 +87,9 @@ buttonpanel.add(loadcharacter);
 buttonpanel.add(startgame);
 buttonpanel.setLayout(new GridLayout(4,1));
 buttonpanel.setBackground(Color.BLACK);
-selectmap.setBackground(Color.GREEN);
-createcharacter.setBackground(Color.GREEN);
-loadcharacter.setBackground(Color.GREEN);
+selectmap.setBackground(Color.ORANGE);
+createcharacter.setBackground(Color.ORANGE);
+loadcharacter.setBackground(Color.YELLOW);
 startgame.setBackground(Color.WHITE);
 add(buttonpanel, BorderLayout.CENTER);
 
@@ -104,6 +98,7 @@ add(buttonpanel, BorderLayout.CENTER);
 setPreferredSize(new Dimension(350,350));
 this.setBackground(Color.BLACK);
 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+setLocationRelativeTo(null);
 pack();
 setVisible(true);
 

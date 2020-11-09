@@ -6,7 +6,7 @@ import java.awt.Color;
 public class Skeleton extends Entity{
 
     public Skeleton() {
-        super(4, 2, 3, 3, ROLE.SKELETON, null, 15);
+        super(4, 2, 3, 3, ROLE.SKELETON, 10, 1);
     }
        
         @Override

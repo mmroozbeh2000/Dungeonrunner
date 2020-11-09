@@ -7,7 +7,7 @@ public class Thief extends Entity{
     
    
     public Thief() {
-       super(7, 5, 5, 7,ROLE.THIEF, Color.RED);
+       super(7, 5, 5, 7,ROLE.THIEF, Color.RED,1);
     
     
     }

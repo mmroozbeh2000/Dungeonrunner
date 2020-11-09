@@ -47,9 +47,9 @@ public class MapWindow extends JFrame implements ActionListener{
 	smallMap = new JButton("Small" + "" +"4x4");
 	mediumMap = new JButton("Medium" +"" + "5x5");
     largeMap = new JButton("Large" + "" + "8x8");
-    smallMap.setBackground(Color.GREEN);
+    smallMap.setBackground(Color.WHITE);
     mediumMap.setBackground(Color.CYAN);
-    largeMap.setBackground(Color.RED);
+    largeMap.setBackground(Color.GREEN);
 	//Booleans
 	whichMap =0;
 	
@@ -77,6 +77,7 @@ public class MapWindow extends JFrame implements ActionListener{
 	setPreferredSize(new Dimension(350,350));
 	this.setBackground(Color.BLACK);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setLocationRelativeTo(null);
 	pack();
 	setVisible(true);
 

@@ -6,7 +6,7 @@ import java.awt.Color;
 public class Orc extends Entity{
 
     public Orc() {
-        super(6, 3, 4, 4, ROLE.ORC, null, 10);
+        super(6, 3, 4, 4, ROLE.ORC,10,1);
     }
     
     @Override

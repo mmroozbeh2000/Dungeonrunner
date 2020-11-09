@@ -12,8 +12,11 @@ private Hanteraren handler;
 private RoomContent rc;   //All the room contents;
 private boolean[][] visited;
 private boolean[] monster;
+private int mapcolor;
 private int [][] mapcolumn;
 private int[][] maprow;
+private int lastX;
+private int lastY;
 private int[][] map;
 private int[] mapY;
 private int[] mapX;
@@ -36,7 +39,10 @@ mapcolumn = new int[a][b];
 maprow = new int[b][a];
 mapY = new int[a];
 mapX= new int[b];
+lastX=0;
+lastY = 0;
 visited = new boolean[a][b];
+mapcolor=a;
 monster = new boolean[a];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
 rc = new RoomContent(a,b);
 //Exit point
@@ -49,6 +55,9 @@ fillMap();  // Fill the map with x and y values.
 System.out.println(handler.getPlayer());
 handler.getPlayer().setX(mapcolumn[3][3]);
 handler.getPlayer().setY(maprow[3][3]);
+lastX= handler.getPlayer().getX();
+lastY= handler.getPlayer().getY();
+
 System.out.println(handler.getPlayer().getName());
 printValues();
 }
@@ -70,11 +79,22 @@ this.setBackground(Color.BLACK);
 for(int z=0;z<mapcolumn.length;z++) {
 
 for(int j=0;j<mapcolumn.length;j++) {
-
+if(mapcolor<=4) {
 g.setColor(Color.WHITE);
+}
+else if(mapcolor>=4&&mapcolor<=6) {
+g.setColor(Color.CYAN);	
+}
+else if(mapcolor>=6 && mapcolor<=8) {
+g.setColor(Color.GREEN);	
+}
+
 g.fillRect(mapX[j], mapY[z], 35, 35);
+g.setColor(Color.LIGHT_GRAY);
+g.fillRect(lastX,lastY ,35, 35);
 g.setColor(handler.getPlayer().getColor());
 g.fillRect(handler.getPlayer().getX(),handler.getPlayer().getY() ,35, 35);
+
 
 }	
 
@@ -114,23 +134,26 @@ System.out.print(mapcolumn[i][j] + "\t");
 
 
 public void moveDown() {
-
+lastY= handler.getPlayer().getY();
 handler.getPlayer().setY(handler.getPlayer().getY()+40);
 clamp();
 this.repaint();
 }
 
 public void moveUp() {
+lastY= handler.getPlayer().getY();	
 handler.getPlayer().setY(handler.getPlayer().getY()-40);
 clamp();
 this.repaint();	
 }
 public void moveLeft() {
+lastX= handler.getPlayer().getY();	
 handler.getPlayer().setX(handler.getPlayer().getX()-75);
 clamp();
 this.repaint();	
 }
 public void moveRight() {
+lastX= handler.getPlayer().getY();	
 handler.getPlayer().setX(handler.getPlayer().getX()+75);
 clamp();
 this.repaint();		
@@ -211,8 +234,3 @@ return -1;
 
 
 }
-
-
-
-
-

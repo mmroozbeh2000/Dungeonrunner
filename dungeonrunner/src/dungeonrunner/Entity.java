@@ -15,6 +15,7 @@ public abstract class Entity {
     private int endurance;
     private int attack;
     private int flexibility;
+    private int damage;
     private ROLE role;
     //Ny kod
     private String name;
@@ -27,17 +28,18 @@ public abstract class Entity {
     protected Color color;
     
     //Constructor för spelkaraktär
-    public Entity(int initiative, int endurance, int attack, int flexibility, ROLE role, Color color) {
+    public Entity(int initiative, int endurance, int attack, int flexibility, ROLE role, Color color, int damage) {
         this.initiative = initiative;
         this.endurance = endurance;
         this.attack = attack;
         this.flexibility = flexibility;
         this.role=role;
         this.color=color;
+        this.damage=damage;
      
     }
     //Constructor för monster
-    public Entity(int initiative, int endurance, int attack, int flexibility, ROLE role, Color color, int rarity) {
+    public Entity(int initiative, int endurance, int attack, int flexibility, ROLE role, int rarity, int damage) {
     this.initiative = initiative;
     this.endurance = endurance;
     this.attack = attack;
@@ -106,6 +108,14 @@ public abstract class Entity {
 
     public void setRarity(int rarity) {
         this.rarity = rarity;
+    }
+    
+    public int getDamage() {
+    return damage;	
+    }
+    
+    public void setDamage(int damage) {
+    this.damage=damage;	
     }
     
 

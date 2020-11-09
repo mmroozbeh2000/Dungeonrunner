@@ -19,26 +19,26 @@ private int mapsize[][];
 
 		
 //Monster på kartan
-private int spiderX[];
-private int spiderY[];
-private int orcX[];
+private int spiderX[];  //0
+private int spiderY[]; 
+private int orcX[]; // 1
 private int orcY[];
-private int skeletonX[][];
-private int skeletonY[][];
-private int trollX[][];
-private int trollY[][];
+private int skeletonX[];
+private int skeletonY[];
+private int trollX[];
+private int trollY[];
 ///
 //Skatter på kartan
-private int coinX[][];
-private int coinY[][];
-private int coinpurseX[][];
-private int coinpurseY[][];
-private int goldX[][];
-private int goldY[][];
-private int treasurechestX[][];
-private int treasurechestY[][];
-private int jewelryX[][];
-private int jewelryY[][];
+private int coinX[];  // 0
+private int coinY[];
+private int coinpurseX[]; //1
+private int coinpurseY[];
+private int goldX[];
+private int goldY[];
+private int treasurechestX[];
+private int treasurechestY[];
+private int jewelryX[];
+private int jewelryY[];
 
 PriorityQueue<JFrame> queue;
 private Random rand;
@@ -56,21 +56,21 @@ spiderX = new int[a];
 spiderY = new int[b];
 orcX = new int[b];
 orcY = new int[a];
-skeletonX = new int[a][b];
-skeletonY = new int[a][b];
-trollX = new int[a][b];
-trollY = new int[b][a];
+skeletonX = new int[a];
+skeletonY = new int[a];
+trollX = new int[a];
+trollY = new int[a];
 //Skatter
-coinX = new int[a][b];
-coinY= new int[a][b];
-coinpurseX = new int[a][b];
-coinpurseY= new int[a][b];
-goldX = new int[a][b];
-goldY = new int[a][b];
-jewelryX = new int[a][b];
-jewelryY= new int[a][b];
-treasurechestX = new int[a][b];
-treasurechestY = new int[a][b];
+coinX = new int[a];
+coinY= new int[a];
+coinpurseX = new int[a];
+coinpurseY= new int[a];
+goldX = new int[a];
+goldY = new int[a];
+jewelryX = new int[a];
+jewelryY= new int[a];
+treasurechestX = new int[a];
+treasurechestY = new int[a];
 //Fill treasures
 fillCoin();
 fillcoinPurse();
@@ -93,8 +93,8 @@ for(int j=0;j<mapsize.length;j++) {
 randval = rand.nextInt(100)+1;
 
 if(randval<=40 ) {
-coinX[i][j]=x;	
-coinY[i][j]=y;
+coinX[j]=x;	
+coinY[i]=y;
 x+=75;	
 }
 }	
@@ -111,8 +111,8 @@ for(int j=0;j<mapsize.length;j++) {
 randval = rand.nextInt(100)+1;
 
 if(randval<=510) {
-jewelryX[i][j]=x;	
-jewelryY[i][j]=y;
+jewelryX[j]=x;	
+jewelryY[i]=y;
 x+=75;	
 }
 }
@@ -129,8 +129,8 @@ for(int j=0;j<mapsize.length;j++) {
 randval = rand.nextInt(100)+1;
 
 if(randval<=40 ) {
-coinpurseX[i][j]=x;	
-coinpurseY[i][j]=y;
+coinpurseX[j]=x;	
+coinpurseY[i]=y;
 x+=75;	
 }
 }
@@ -149,8 +149,8 @@ for(int j=0;j<mapsize.length;j++) {
 randval = rand.nextInt(100)+1;
 
 if(randval<=5 ) {
-treasurechestX[i][j]=x;	
-treasurechestY[i][j]=y;
+treasurechestX[j]=x;	
+treasurechestY[i]=y;
 x+=75;	
 }
 }
@@ -171,8 +171,8 @@ for(int j=0;j<mapsize.length;j++) {
 randval = rand.nextInt(100)+1;
 
 if(randval<=15 ) {
-goldX[i][j]=x;	
-goldY[i][j]=y;
+goldX[j]=x;	
+goldY[i]=y;
 x+=75;	
 }
 }
@@ -226,6 +226,13 @@ public void addSpider(int a, int b) {
 }
 
 
+public int checkTreasure(int a, int b, int x, int y) {
+if(coinX[b]==x && coinY[a]==y) {
+return 0;	
+}
+return -1;
+}
+
 
 public int checkMonster(int a, int b, int x, int y) {
 //If room contains a spider	
@@ -236,69 +243,54 @@ return 0;
 
 
 //if Room contains an orc
-if(orcX[b]==x && orcY[a]==y) {
+else if(orcX[b]==x && orcY[a]==y) {
 handler.newOrc();
 return 1;
 }
 
+//If room contain an orc and a spider
 else if(spiderX[b]==x && spiderY[a]==y && orcX[b]==x && orcY[a]==y) {
 return 10;	
 }
 
-return -1;
 
+return -1;
 }
+
+
 
 public void removeSpider(int a, int b) {
 spiderX[a]=0;
 spiderY[b]=0;
 }
-
 public boolean getOrcs(int a, int b) {
 if(orcX[b]>0 && orcY[a]>0) {
 return true;	
 }
 return false;
 }
-
 public boolean getSpiders(int a, int b) {
 if(spiderX[a]>0 && spiderY[b]>0) {
 return true;	
 }
 return false;
 }
-	
-
 public boolean  getSkeletons(int a, int b) {
-if(skeletonX[a][b]>0 && skeletonY[a][b]>0) {
+if(skeletonX[a]>0 && skeletonY[b]>0) {
 return true;	
 }
 return false;
 }	
-
-
 public boolean  getTrolls(int a, int b) {
-if(trollX[a][b]>0 && trollY[a][b]>0) {
+if(trollX[a]>0 && trollY[b]>0) {
 return true;	
 }
 return false;
 }
-
 public boolean getMonster(int n) {
 return monster[n];	
 }
-
-
-
-
-
-
 }
-
-
-
-
-
 
 
 

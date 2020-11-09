@@ -28,7 +28,7 @@ public GameWindow() {
 	
 }
 	
-public GameWindow(int width, int height, int a, int b){	  //Add values to decide which map
+public GameWindow(int width, int height, int a){	  //Add values to decide which map
 handler = new Hanteraren();	
 monster = new boolean[4];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
 frame = new JFrame("DungeonRunner");
@@ -39,7 +39,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.setResizable(false);
 frame.setLocationRelativeTo(null);
 frame.setVisible(true);
-dw = new drawWindow(a,b);
+dw = new drawWindow(a,a);
 awspider= new AttackWindow();
 aworc = new AttackWindow();
 dw.setFocusable(true);
@@ -47,6 +47,7 @@ dw.addKeyListener(this);
 awspider.addWindowListener(this);
 aworc.addWindowListener(this);
 frame.addWindowListener(this);
+//Lägg till kartrutan
 frame.add(dw);
 frame.pack();
 }

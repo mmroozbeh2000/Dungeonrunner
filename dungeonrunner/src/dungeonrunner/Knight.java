@@ -9,7 +9,7 @@ public class Knight extends Entity{
     
 private boolean block=true;	
     public Knight() {
-        super(5, 9, 6, 4,ROLE.KNIGHT, Color.BLUE);
+        super(5, 9, 6, 4,ROLE.KNIGHT, Color.BLUE,1);
     }
 
 
