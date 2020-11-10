@@ -2,26 +2,29 @@ package dungeonrunner;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Panel;
 import java.awt.Toolkit;
 
-class BackgroundPanel extends Panel
-{
-    /**
+import javax.swing.JPanel;
+
+class BackgroundPanel extends JPanel{   /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
+	
 	// The Image to store the background image in.
-    Image img;
+    private Image img;
+    
     public BackgroundPanel()
     {
         // Loads the background image and stores in img object.
         img = Toolkit.getDefaultToolkit().createImage("C:/Javafiler/Main.jpg");
     }
-
-    public void paint(Graphics g)
+     @Override
+    public void paintComponent(Graphics g)
     {
-        // Draws the img to the BackgroundPanel.
-        g.drawImage(img, 0, 0, null);
+       super.paintComponent(g);
+        g.drawImage(img, 0, 0, this);
     }
 }

@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
-import javax.swing.text.Style;
 
 
 
@@ -32,7 +32,6 @@ public static final int WIDTH= 1000;
 public static final int HEIGHT = WIDTH / 12 *9;  //480
 
 public TryIt() {
-	
 	UIDefaults uiDefaults = UIManager.getDefaults();
 	uiDefaults.put("activeCaption", new javax.swing.plaf.ColorUIResource(Color.BLACK));
 	uiDefaults.put("activeCaptionText", new javax.swing.plaf.ColorUIResource(Color.ORANGE));
@@ -44,6 +43,9 @@ public TryIt() {
 	gw = new GameWindow();
 	mw = new MenuWindow();
 	mw.addWindowListener(this);
+	File menuMusic = new File("C:/Javafiler/Halloween.wav");
+	Sound s = new Sound();
+	s.playSound(menuMusic);
 	
 	
 }

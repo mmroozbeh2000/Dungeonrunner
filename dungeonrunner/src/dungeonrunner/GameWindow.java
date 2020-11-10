@@ -20,6 +20,7 @@ public class GameWindow  extends JPanel implements KeyListener, WindowListener{
 private drawWindow dw;
  AttackWindow awspider;
  AttackWindow aworc;
+ AttackWindow awskeleton;
 private boolean[] monster;
 private Hanteraren handler;
 private JFrame frame;
@@ -42,10 +43,12 @@ frame.setVisible(true);
 dw = new drawWindow(a,a);
 awspider= new AttackWindow();
 aworc = new AttackWindow();
+awskeleton = new AttackWindow();
 dw.setFocusable(true);
 dw.addKeyListener(this);
 awspider.addWindowListener(this);
 aworc.addWindowListener(this);
+awskeleton.addWindowListener(this);
 frame.addWindowListener(this);
 //Lägg till kartrutan
 frame.add(dw);
@@ -62,6 +65,11 @@ else if(n==1) {
 aworc = new AttackWindow(1, handler);
 aworc.addWindowListener(this);
 handler.newOrc();
+}
+else if(n==2) {
+awskeleton = new AttackWindow(2, handler);
+awskeleton.addWindowListener(this);
+handler.newSkeleton();
 }
 else if(n==10) {
 awspider = new AttackWindow(0,handler);

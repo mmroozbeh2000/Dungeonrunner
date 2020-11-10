@@ -15,8 +15,8 @@ private boolean[] monster;
 private int mapcolor;
 private int [][] mapcolumn;
 private int[][] maprow;
-private int lastX;
-private int lastY;
+private int lastX[];
+private int lastY[];
 private int[][] map;
 private int[] mapY;
 private int[] mapX;
@@ -39,8 +39,8 @@ mapcolumn = new int[a][b];
 maprow = new int[b][a];
 mapY = new int[a];
 mapX= new int[b];
-lastX=0;
-lastY = 0;
+lastX = new int[a*4];
+lastY=new int[a*4];
 visited = new boolean[a][b];
 mapcolor=a;
 monster = new boolean[a];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
@@ -55,8 +55,8 @@ fillMap();  // Fill the map with x and y values.
 System.out.println(handler.getPlayer());
 handler.getPlayer().setX(mapcolumn[3][3]);
 handler.getPlayer().setY(maprow[3][3]);
-lastX= handler.getPlayer().getX();
-lastY= handler.getPlayer().getY();
+lastX[0]= handler.getPlayer().getX();
+lastY[0]= handler.getPlayer().getY();
 
 System.out.println(handler.getPlayer().getName());
 printValues();
@@ -75,7 +75,25 @@ public void paintComponent(Graphics g) {
 	
 super.paintComponent(g);
 this.setBackground(Color.BLACK);
-
+if(mapcolor<=4) {
+g.setColor(Color.WHITE);
+g.fillRect(mapX[0], mapY[0]+15, 225,10);
+g.fillRect(mapX[0], mapY[1]+15, 225,10);
+g.fillRect(mapX[0], mapY[2]+15, 225,10);
+g.fillRect(mapX[0], mapY[3]+15, 225,10);
+}
+else if(mapcolor>=4&&mapcolor<=6) {
+g.setColor(Color.CYAN);	
+for(int i=0;i<mapX.length;i++) {
+g.fillRect(mapX[0], mapY[i]+15, 300, 10);	
+}
+}
+else if(mapcolor>=6&&mapcolor<=8) {
+g.setColor(Color.GREEN);	
+for(int i=0;i<mapX.length;i++) {
+g.fillRect(mapX[0], mapY[i]+15, 525, 10);	
+}	
+}
 for(int z=0;z<mapcolumn.length;z++) {
 
 for(int j=0;j<mapcolumn.length;j++) {
@@ -90,8 +108,6 @@ g.setColor(Color.GREEN);
 }
 
 g.fillRect(mapX[j], mapY[z], 35, 35);
-g.setColor(Color.LIGHT_GRAY);
-g.fillRect(lastX,lastY ,35, 35);
 g.setColor(handler.getPlayer().getColor());
 g.fillRect(handler.getPlayer().getX(),handler.getPlayer().getY() ,35, 35);
 
@@ -121,10 +137,6 @@ public void printValues() {
 for(int i=0;i<mapcolumn.length;i++) {
 System.out.println();
 for(int j=0;j<mapcolumn.length;j++) {
-
-
-System.out.print(mapcolumn[i][j] + "\t");
-
 }	
 }
 
@@ -134,26 +146,22 @@ System.out.print(mapcolumn[i][j] + "\t");
 
 
 public void moveDown() {
-lastY= handler.getPlayer().getY();
 handler.getPlayer().setY(handler.getPlayer().getY()+40);
 clamp();
 this.repaint();
 }
 
 public void moveUp() {
-lastY= handler.getPlayer().getY();	
 handler.getPlayer().setY(handler.getPlayer().getY()-40);
 clamp();
 this.repaint();	
 }
 public void moveLeft() {
-lastX= handler.getPlayer().getY();	
 handler.getPlayer().setX(handler.getPlayer().getX()-75);
 clamp();
 this.repaint();	
 }
 public void moveRight() {
-lastX= handler.getPlayer().getY();	
 handler.getPlayer().setX(handler.getPlayer().getX()+75);
 clamp();
 this.repaint();		
@@ -220,6 +228,11 @@ public int checkRooms() {   //Kolla in rummen och returnera en siffra beroende p
 		else if(rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY())==1) { // if room contains an orc!
 		return 1;	
 		}
+		
+		else if(rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY())==2) { // if room contains a skeleton!!
+		return 2;	
+		}
+		
 		else if(rc.checkMonster(i, j, handler.getPlayer().getX(),handler.getPlayer().getY())==10) {  //If room contains an orc and a spider 1+0 = 10.
 		return 10;	
 		}

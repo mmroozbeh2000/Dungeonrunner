@@ -9,6 +9,7 @@ public class Hanteraren {
 static Entity Player;	
 static Entity Spider;
 static Entity Orc;
+static Entity Skeleton;
 static boolean playerstatus;
 static List<Entity> Entitylist = new LinkedList<>();	
 List<mapBox> boxlist = new ArrayList<>();
@@ -39,7 +40,7 @@ Entitylist.add(new Troll());
 }
 
 public void newSkeleton(){
-Entitylist.add(new Skeleton());	
+Skeleton = new Skeleton();
 }
 
 public void newOrc(){
@@ -61,6 +62,9 @@ public Entity getOrc() {
 return Orc;	
 }
 
+public Entity getSkeleton() {
+return Skeleton;	
+}
 
 public Entity getEntity(int n){
 return Entitylist.get(n);

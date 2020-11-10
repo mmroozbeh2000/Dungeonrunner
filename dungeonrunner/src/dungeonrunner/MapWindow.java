@@ -38,26 +38,25 @@ public class MapWindow extends JFrame implements ActionListener{
 	public MapWindow() {
 	super("Dungeon Runner");
 	setLayout(new GridLayout(3,1));
-	this.getContentPane().setBackground(Color.BLACK);	
+	setContentPane(new BackgroundPanel());	
 	//JPanels
 	buttonpanel = new JPanel();	
-	buttonpanel.setBackground(Color.BLACK);
-	BackgroundPanel background;
 	//JButtons
 	smallMap = new JButton("Small" + "" +"4x4");
 	mediumMap = new JButton("Medium" +"" + "5x5");
     largeMap = new JButton("Large" + "" + "8x8");
-    smallMap.setBackground(Color.WHITE);
-    mediumMap.setBackground(Color.CYAN);
-    largeMap.setBackground(Color.GREEN);
+    smallMap.setOpaque(false);
+    smallMap.setContentAreaFilled(false);
+    mediumMap.setOpaque(false);
+    mediumMap.setContentAreaFilled(false);
+    smallMap.setContentAreaFilled(false);
+    largeMap.setOpaque(false);
+    largeMap.setContentAreaFilled(false);
+    smallMap.setForeground(Color.WHITE);
+    mediumMap.setForeground(Color.CYAN);
+    largeMap.setForeground(Color.GREEN);
 	//Booleans
 	whichMap =0;
-	
-
-	//Images
-	image = new ImageIcon("C:/Javafiler/Main.jpg");
-	imagelabel = new JLabel(image);
-	imagelabel.setSize(350,350);
 
 	//Add listeners
 	smallMap.addActionListener(this);
@@ -65,13 +64,10 @@ public class MapWindow extends JFrame implements ActionListener{
 	largeMap.addActionListener(this);
 
 	//Add stuff
-	buttonpanel.add(smallMap);
-	buttonpanel.add(mediumMap);
-	buttonpanel.add(largeMap);
-	buttonpanel.setLayout(new GridLayout(3,1));
-	background = new BackgroundPanel();
-	add(buttonpanel, BorderLayout.CENTER);
-
+	this.getContentPane().setLayout(new GridLayout(3,1));
+	this.getContentPane().add(smallMap);
+	this.getContentPane().add(mediumMap);
+	this.getContentPane().add(largeMap);;
 	//Colors
 
 	setPreferredSize(new Dimension(350,350));

@@ -59,7 +59,7 @@ public CharacterScreen() {
 super("Welcome to the character creator!");
 setLayout(new GridLayout(4,4));
 getContentPane().setBackground(Color.BLACK);
-setMinimumSize(new Dimension(400,400));
+setMinimumSize(new Dimension(350,350));
 setVisible(true);
 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -112,6 +112,8 @@ charpanel.add(Mage);
 
 //Add Text
 textarea = new JTextArea(3,3);
+textarea.setBackground(Color.BLACK);
+textarea.setForeground(Color.WHITE);
 textpanel.add(textarea);
 Chartext = new JTextField(15);
 Charname = new JLabel("Please enter your name");
@@ -122,9 +124,11 @@ create.setBackground(Color.ORANGE);
 buttonpanel.setBackground(Color.BLACK);
 Charname.setBackground(Color.WHITE);
 textpanel.setBackground(Color.BLACK);
-
+Charname.setForeground(Color.ORANGE);
 setLocationRelativeTo(null);
-
+create.setContentAreaFilled(false);
+create.setOpaque(false);
+create.setForeground(Color.ORANGE);
 add(charpanel);
 
 //Add buttons
@@ -170,7 +174,7 @@ dispose();
 //Create Thief	
 else if(Thief.isSelected()) {	
 handler.setThief();
-textarea.setText("Attack:" + handler.getPlayer().getAttack() +"\n" + "Endurance:"+handler.getPlayer().getEndurance() +"\n" + "Flexibility:" + handler.getPlayer().getFlexibility()+"\n" + "Initiative:"+ handler.getPlayer().getInitiative());
+textarea.setText("Class:Thief" +"\n" + "Attack:" + handler.getPlayer().getAttack() +"\n" + "Endurance:"+handler.getPlayer().getEndurance() +"\n" + "Flexibility:" + handler.getPlayer().getFlexibility()+"\n" + "Initiative:"+ handler.getPlayer().getInitiative());
 textarea.setEditable(false);
 pack();
 }
@@ -178,14 +182,14 @@ pack();
 else if(Knight.isSelected()) {
 handler.setKnight();
 revalidate();
-textarea.setText("Attack:" + handler.getPlayer().getAttack() +"\n" + "Endurance:"+handler.getPlayer().getEndurance() +"\n" + "Flexibility:" + handler.getPlayer().getFlexibility()+"\n" + "Initiative:"+ handler.getPlayer().getInitiative());
+textarea.setText("Class:Knight" +"\n" +"Attack:" + handler.getPlayer().getAttack() +"\n" + "Endurance:"+handler.getPlayer().getEndurance() +"\n" + "Flexibility:" + handler.getPlayer().getFlexibility()+"\n" + "Initiative:"+ handler.getPlayer().getInitiative());
 textarea.setEditable(false);
 pack();
 }
 //Create Mage
 else if(Mage.isSelected()) {
 handler.setMage();
-textarea.setText("Attack:" + handler.getPlayer().getAttack() +"\n" + "Endurance:"+handler.getPlayer().getEndurance() +"\n" + "Flexibility:" + handler.getPlayer().getFlexibility()+"\n" + "Initiative:"+ handler.getPlayer().getInitiative());
+textarea.setText("Class:Mage" +"\n" +"Attack:" + handler.getPlayer().getAttack() +"\n" + "Endurance:"+handler.getPlayer().getEndurance() +"\n" + "Flexibility:" + handler.getPlayer().getFlexibility()+"\n" + "Initiative:"+ handler.getPlayer().getInitiative());
 pack();
 }
 
