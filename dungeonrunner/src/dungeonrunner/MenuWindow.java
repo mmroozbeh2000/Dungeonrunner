@@ -3,20 +3,17 @@ package dungeonrunner;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
-import javax.swing.plaf.ColorUIResource;
 
 public class MenuWindow extends JFrame implements ActionListener {
 
@@ -48,8 +45,9 @@ private JLabel imagelabel;
 
 public MenuWindow() {
 super("Dungeon Runner");
-setLayout(new GridLayout(3,1));
-this.getContentPane().setBackground(Color.BLACK);	
+setLayout(new GridLayout(4,1));
+setPreferredSize(new Dimension(350,350));
+setContentPane(new BackgroundPanel());
 handler = new Hanteraren();
 //JPanels
 buttonpanel = new JPanel();
@@ -81,25 +79,32 @@ startgame.addActionListener(this);
 
 
 //Add stuff
-buttonpanel.add(selectmap);
-buttonpanel.add(createcharacter);
-buttonpanel.add(loadcharacter);
-buttonpanel.add(startgame);
-buttonpanel.setLayout(new GridLayout(4,1));
-buttonpanel.setBackground(Color.BLACK);
-selectmap.setBackground(Color.ORANGE);
-createcharacter.setBackground(Color.ORANGE);
-loadcharacter.setBackground(Color.YELLOW);
-startgame.setBackground(Color.WHITE);
-add(buttonpanel, BorderLayout.CENTER);
-
+this.getContentPane().add(selectmap);
+this.getContentPane().add(createcharacter);
+this.getContentPane().add(loadcharacter);
+this.getContentPane().add(startgame);
+this.getContentPane().setLayout(new GridLayout(4,1));
+selectmap.setBackground(Color.BLACK);
+createcharacter.setBackground(Color.BLACK);
+loadcharacter.setBackground(Color.BLACK);
+startgame.setBackground(Color.BLACK);
+startgame.setOpaque(false);
+startgame.setContentAreaFilled(false);
+selectmap.setOpaque(false);
+selectmap.setContentAreaFilled(false);
+loadcharacter.setOpaque(false);
+loadcharacter.setContentAreaFilled(false);
+createcharacter.setOpaque(false);
+createcharacter.setContentAreaFilled(false);
+selectmap.setForeground(Color.ORANGE);
+startgame.setForeground(Color.ORANGE);
+loadcharacter.setForeground(Color.ORANGE);
+createcharacter.setForeground(Color.ORANGE);
 //Colors
-
-setPreferredSize(new Dimension(350,350));
+pack();
 this.setBackground(Color.BLACK);
 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 setLocationRelativeTo(null);
-pack();
 setVisible(true);
 
 }
