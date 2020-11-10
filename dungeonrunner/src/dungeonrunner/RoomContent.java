@@ -249,7 +249,7 @@ public void addSpider(int a, int b) {
 }
 
 
-public int checkTreasure(int a, int b, int x, int y) {
+public int checkTreasure(int a, int b, int x, int y) { //a = i, b = y, x = handler.getplayer.getX(); y = handler.getplayer.getY() i drawWindow där den kallas på
 if(coinX[b]==x && coinY[a]==y) {
 return 0;	
 }
@@ -257,7 +257,7 @@ return -1;
 }
 
 
-public int checkMonster(int a, int b, int x, int y) {
+public int checkMonster(int a, int b, int x, int y) { //a = i, b = y, x = handler.getplayer.getX(); y = handler.getplayer.getY() i drawWindow där den kallas på
 //If room contains a spider	
 if(spiderX[b] ==x && spiderY[a]==y) {
 handler.newSpider();
