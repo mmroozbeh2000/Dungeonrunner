@@ -110,15 +110,14 @@ public void keyPressed(KeyEvent e) {
 	dw.moveLeft();
 	dw.setClear();
 	initiateBattle(dw.checkRooms());
-	 revalidate();
+
 	 }
 	 
 	 else if(key == KeyEvent.VK_RIGHT) {
 	dw.moveRight();
 	dw.setClear();
 	initiateBattle(dw.checkRooms());
-	 revalidate();
-		 
+	 
 	 }
 
 	

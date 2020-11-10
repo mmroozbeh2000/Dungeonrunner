@@ -53,8 +53,8 @@ x=75;
 y=50;	
 fillMap();  // Fill the map with x and y values.
 System.out.println(handler.getPlayer());
-handler.getPlayer().setX(mapcolumn[3][3]);
-handler.getPlayer().setY(maprow[3][3]);
+handler.getPlayer().setX(mapX[3]);
+handler.getPlayer().setY(mapY[3]);
 lastX[0]= handler.getPlayer().getX();
 lastY[0]= handler.getPlayer().getY();
 
@@ -75,6 +75,8 @@ public void paintComponent(Graphics g) {
 	
 super.paintComponent(g);
 this.setBackground(Color.BLACK);
+
+//Skriv ut raderna 
 if(mapcolor<=4) {
 g.setColor(Color.WHITE);
 g.fillRect(mapX[0], mapY[0]+15, 225,10);
