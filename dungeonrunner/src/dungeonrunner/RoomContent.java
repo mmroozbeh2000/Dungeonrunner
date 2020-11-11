@@ -1,13 +1,9 @@
 package dungeonrunner;
 
-import java.awt.Frame;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.PriorityQueue;
 import java.util.Random;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 public class RoomContent{
 

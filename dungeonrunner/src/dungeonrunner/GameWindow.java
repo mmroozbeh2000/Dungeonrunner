@@ -7,7 +7,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -110,14 +109,15 @@ public void keyPressed(KeyEvent e) {
 	dw.moveLeft();
 	dw.setClear();
 	initiateBattle(dw.checkRooms());
-
+	 revalidate();
 	 }
 	 
 	 else if(key == KeyEvent.VK_RIGHT) {
 	dw.moveRight();
 	dw.setClear();
 	initiateBattle(dw.checkRooms());
-	 
+	 revalidate();
+		 
 	 }
 
 	

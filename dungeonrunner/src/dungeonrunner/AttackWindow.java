@@ -304,8 +304,11 @@ attack.setEnabled(false);
 flee.setEnabled(false);	
 revalidate();	
 try {	
+Thread.sleep(500);	
 playerAttack(handler.getSkeleton(), handler.getPlayer(), monsterID);	
+Thread.sleep(500);
 revalidate();
+Thread.sleep(500);
 beginBattle(handler.getSkeleton(), handler.getPlayer());
 attack.setEnabled(true);
 flee.setEnabled(true);
@@ -344,31 +347,16 @@ revalidate();
 else {  //If monster is faster than player, player can't attack
 if(monsterID==0) {	
 textarea.setText("Spider begins to attack!");	
-textarea.setVisible(false);
-textarea.revalidate();
-textarea.setVisible(true);
-textarea.revalidate();
-Thread.sleep(500);
 revalidate();
 monsterAttack(monster,player, monsterID);
 }
 else if(monsterID==1) {
 textarea.setText("Orc begins to attack!");	
-textarea.setVisible(false);
-textarea.revalidate();
-textarea.setVisible(true);
-textarea.revalidate();
-Thread.sleep(500);
+revalidate();
 monsterAttack(monster,player, monsterID);
 }
 else if(monsterID==2) {
 textarea.setText("Skeleton begins to attack!");	
-textarea.setVisible(false);
-textarea.revalidate();
-textarea.setVisible(true);
-textarea.revalidate();
-Thread.sleep(200);
-
 revalidate();
 monsterAttack(monster,player, monsterID);
 }
@@ -389,13 +377,13 @@ flee.setEnabled(false);
 revalidate();
 
 if(monster.attackAttempt()>player.dodgeAttempt()) {
+
 	
 //Monstren har extra hög skada under demot.	
 if(monsterID==0) {	
 textarea.setText("Spider attacks player for:" + " " + " 3" + " " + "Demodamage!");	
 attack.setEnabled(true);
 flee.setEnabled(true);
-revalidate();
 }
 else if(monsterID==1) {
 textarea.setText("Orc attacks player for "+ " " + "3" + " " + "Demodamage!");	
@@ -510,3 +498,4 @@ e.printStackTrace();
 
 
 }
+

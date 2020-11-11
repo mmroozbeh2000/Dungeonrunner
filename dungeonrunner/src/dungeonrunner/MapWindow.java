@@ -1,6 +1,5 @@
 package dungeonrunner;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -101,3 +100,4 @@ public class MapWindow extends JFrame implements ActionListener{
 	}
 
 }
+
