@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class AttackWindow extends JFrame implements ActionListener{
@@ -29,6 +31,10 @@ private ImageIcon imageicons[];
 private JButton attack;
 private JButton flee;
 private JButton battle;
+
+
+//JScrollPane
+private JScrollPane jspane;
 
 //Boolean
 private boolean knightblock = false;
@@ -110,6 +116,8 @@ orcbar.setForeground(Color.GREEN);
 orcbar.setBackground(Color.BLACK);
 
 
+
+
 //JLabels
 imagelabels = new JLabel[6];	
 imagelabels[0]= new JLabel(imageicons[0]);
@@ -124,8 +132,9 @@ playerlabel.setForeground(Color.GREEN);
 
 
 //Textarea
-textarea = new JTextArea(5,10);
+textarea = new JTextArea(10,15);
 textarea.setEditable(false);
+textarea.setLineWrap(true);
 /* lägg till strings från monsterklasserna
  * t.ex "Spider attacked for x damage" eller "Player lost x hp"
  * Förslagsvis lägg in som methods i Entityklassen "attackMessage()";
@@ -135,13 +144,15 @@ setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 setLocationRelativeTo(null);
 setVisible(true);
 
-
 //Panels
 imagepanel = new JPanel();
 imagepanel.setSize(200,200);
 buttonpanel = new JPanel();
 textpanel = new JPanel();
 barpanel = new JPanel();
+
+//JScrollpane
+
 
 textpanel.setBackground(Color.BLACK);
 textarea.setBackground(Color.BLACK);
@@ -157,11 +168,21 @@ battle.setBackground(Color.ORANGE);
 textpanel.add(textarea);
 setLocationRelativeTo(null);
 pack();
+//Add text to scroll
+jspane= new JScrollPane(textarea);
+jspane.setBackground(Color.BLACK);
+jspane.setForeground(Color.DARK_GRAY);
+jspane.setVisible(true);
+textpanel.add(jspane);
+textpanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+imagepanel.setBorder(BorderFactory.createRaisedBevelBorder());
+
 
 if(n==0) {
 spiderlabel = new JLabel("Spider Endurance" + Integer.toString(handler.getSpider().getEndurance()));	
 spiderlabel.setForeground(Color.GREEN);
 imagepanel.add(imagelabels[0]);
+
 barpanel.add(playerlabel);
 barpanel.add(playerbar);
 barpanel.add(spiderlabel);
@@ -208,7 +229,7 @@ barpanel.add(skeletonlabel);
 barpanel.add(skeletonbar);
 
 add(imagepanel, BorderLayout.NORTH);
-add(textpanel, BorderLayout.CENTER);
+add(jspane, BorderLayout.CENTER);
 add(buttonpanel, BorderLayout.SOUTH);
 add(barpanel, BorderLayout.WEST);
 //Start the battle with Skeleton
@@ -339,24 +360,24 @@ buttonpanel.add(attack);
 buttonpanel.add(flee);	
 try {	
 if(player.rollTurnOrder()>=monster.rollTurnOrder()) {
-textarea.setText("It's your turn to attack!");
+textarea.append("It's your turn to attack!");
 attack.setEnabled(true);
 flee.setEnabled(true);
 revalidate();
 }
 else {  //If monster is faster than player, player can't attack
 if(monsterID==0) {	
-textarea.setText("Spider begins to attack!");	
+textarea.append("\nSpider begins to attack!");	
 revalidate();
 monsterAttack(monster,player, monsterID);
 }
 else if(monsterID==1) {
-textarea.setText("Orc begins to attack!");	
+textarea.append("\nOrc begins to attack!");	
 revalidate();
 monsterAttack(monster,player, monsterID);
 }
 else if(monsterID==2) {
-textarea.setText("Skeleton begins to attack!");	
+textarea.append("\nSkeleton begins to attack!");	
 revalidate();
 monsterAttack(monster,player, monsterID);
 }
@@ -381,17 +402,17 @@ if(monster.attackAttempt()>player.dodgeAttempt()) {
 	
 //Monstren har extra hög skada under demot.	
 if(monsterID==0) {	
-textarea.setText("Spider attacks player for:" + " " + " 3" + " " + "Demodamage!");	
+textarea.append("\nSpider attacks player for:" + " " + " 3");	
 attack.setEnabled(true);
 flee.setEnabled(true);
 }
 else if(monsterID==1) {
-textarea.setText("Orc attacks player for "+ " " + "3" + " " + "Demodamage!");	
+textarea.append("\nOrc attacks player for "+ " " + "3" );	
 attack.setEnabled(true);
 flee.setEnabled(true);
 }
 else if(monsterID==2) {
-textarea.setText("Skeleton attacks player for "+ " " +"3" + " " + "Demodamage!");	
+textarea.append("\nSkeleton attacks player for "+ " " +"3" );	
 attack.setEnabled(true);
 flee.setEnabled(true);
 }
@@ -413,7 +434,7 @@ this.dispose();	  //Stäng ner rutan när man inte har någon tålighet kvar.
 }
 
 else if(player.getRole()==ROLE.KNIGHT&&player.specialAbility()==true) {
-textarea.setText("The player blocked the attack!");
+textarea.append("\nThe player blocked the attack!");
 //Remove block from knight
 player.setspecialAbility(false);
 revalidate();
@@ -425,19 +446,19 @@ revalidate();
 else {
 	
 if(monsterID==0) {	
-textarea.setText("The spider missed it's attack!");
+textarea.append("\nThe spider missed it's attack!");
 attack.setEnabled(true);
 flee.setEnabled(true);
 revalidate();
 }
 else if(monsterID==1) {
-textarea.setText("Orc missed it's attack!");	
+textarea.append("\nOrc missed it's attack!");	
 attack.setEnabled(true);
 flee.setEnabled(true);
 revalidate();
 }
 else if(monsterID==2) {
-textarea.setText("Skeleton missed it's attack!");	
+textarea.setText("\nSkeleton missed it's attack!");	
 attack.setEnabled(true);
 flee.setEnabled(true);
 revalidate();
@@ -458,7 +479,7 @@ public void playerAttack(Entity monster, Entity player,int monsterID) {
 try {	
 if(player.attackAttempt()>monster.dodgeAttempt()) {
 if(monsterID==0) {	
-textarea.setText("Player attacked spider for " + player.getDamage() + " " + "Damage");	
+textarea.append("\nPlayer attacked spider for " + player.getDamage() + " " + "Damage");	
 monster.setEndurance(monster.getEndurance()-player.getDamage());
 spiderlabel.setText("Spider Endurance:" +  Integer.toString(monster.getEndurance()));
 spiderbar.setValue(monster.getEndurance());
@@ -466,7 +487,7 @@ revalidate();
 
 }
 else if(monsterID==1) {
-textarea.setText("Player attacked orc for" + player.getDamage() + " " + "Damage");
+textarea.append("\nPlayer attacked orc for" + player.getDamage() + " " + "Damage");
 monster.setEndurance(monster.getEndurance()-player.getDamage());
 orclabel.setText("Orc Endurance:" + Integer.toString(monster.getEndurance()));
 orclabel.setForeground(Color.GREEN);
@@ -474,7 +495,7 @@ orcbar.setValue(monster.getEndurance());
 revalidate();
 }
 else if(monsterID==2) {
-textarea.setText("Player attacked Skeleton for" + player.getDamage() + " " + "Damage");
+textarea.append("\nPlayer attacked Skeleton for" + player.getDamage() + " " + "Damage");
 monster.setEndurance(monster.getEndurance()-player.getDamage());
 skeletonlabel.setText("Skeleton Endurance:" + Integer.toString(monster.getEndurance()));
 skeletonbar.setValue(monster.getEndurance());
@@ -483,7 +504,7 @@ revalidate();
 revalidate();
 }
 else {
-textarea.setText("The player missed!");
+textarea.append("\nThe player missed!");
 attack.setEnabled(false);
 flee.setEnabled(false);
 monsterAttack(monster, player,monsterID);  //Byta ut mot beginBattle?
