@@ -2,8 +2,11 @@ package dungeonrunner;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageProducer;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 
@@ -17,15 +20,20 @@ private int [][] mapcolumn;
 private int[][] maprow;
 private int lastX[];
 private int lastY[];
+private boolean direction[];
 private int[][] map;
 private int[] mapY;
 private int[] mapX;
 //Exit point
-private int exitpointX[][];
-private int exitpointY[][];
+private ImageIcon img;
+private Image image;
+
+ImageProducer imgprod;
 
 private int x;
 private int y;
+private int count;
+Graphics g;
 /**
 	 * 
 	 */
@@ -33,21 +41,22 @@ private static final long serialVersionUID = 1L;
 
 
 public drawWindow(int a, int b) {
+direction = new boolean[4]; //0 Right, 1 left, 2 up, 3 down.
+direction[0]=true;
 handler= new Hanteraren();
 map = new int[a][b];
 mapcolumn = new int[a][b];
 maprow = new int[b][a];
 mapY = new int[a];
 mapX= new int[b];
-lastX = new int[a*4];
-lastY=new int[a*4];
+lastX = new int[300];
+lastY=new int[300];
 visited = new boolean[a][b];
 mapcolor=a;
 monster = new boolean[a];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
 rc = new RoomContent(a,b);
-//Exit point
-exitpointX= new int[a][b];
-exitpointY = new int[a][b];
+//Count for last pos
+count =0;
 fillRooms(); //Set all rooms to false and fill them with content.
 x=75;
 y=50;	
@@ -77,6 +86,7 @@ super.paintComponent(g);
 this.setBackground(Color.BLACK);
 
 //Skriv ut raderna 
+/*
 if(mapcolor<=4) {
 g.setColor(Color.WHITE);
 g.fillRect(mapX[0], mapY[0]+15, 225,10);
@@ -84,6 +94,7 @@ g.fillRect(mapX[0], mapY[1]+15, 225,10);
 g.fillRect(mapX[0], mapY[2]+15, 225,10);
 g.fillRect(mapX[0], mapY[3]+15, 225,10);
 }
+
 else if(mapcolor>=4&&mapcolor<=6) {
 g.setColor(Color.CYAN);	
 for(int i=0;i<mapX.length;i++) {
@@ -96,9 +107,11 @@ for(int i=0;i<mapX.length;i++) {
 g.fillRect(mapX[0], mapY[i]+15, 525, 10);	
 }	
 }
+*/
 for(int z=0;z<mapcolumn.length;z++) {
 
 for(int j=0;j<mapcolumn.length;j++) {
+/*	
 if(mapcolor<=4) {
 g.setColor(Color.WHITE);
 }
@@ -108,15 +121,81 @@ g.setColor(Color.CYAN);
 else if(mapcolor>=6 && mapcolor<=8) {
 g.setColor(Color.GREEN);	
 }
-
+*/
+g.setColor(Color.WHITE);
 g.fillRect(mapX[j], mapY[z], 35, 35);
-g.setColor(handler.getPlayer().getColor());
-g.fillRect(handler.getPlayer().getX(),handler.getPlayer().getY() ,35, 35);
+for(int i=0;i<count;i++) {
+g.setColor(Color.DARK_GRAY);
+g.fillRect(lastX[i], lastY[i], 35, 35);		
+}
 
+
+//Knight draw
+if(direction[0]==true&&handler.getPlayer().getRole()==ROLE.KNIGHT) {
+img = new ImageIcon("C:/Javafiler/Knighticonright.jpg");
+image = img.getImage();		
+
+}
+else if(direction[1]==true&&handler.getPlayer().getRole()==ROLE.KNIGHT) {
+img = new ImageIcon("C:/Javafiler/Knighticonleft.jpg");
+image = img.getImage();	
+}
+else if(direction[2]==true&&handler.getPlayer().getRole()==ROLE.KNIGHT) {
+img = new ImageIcon("C:/Javafiler/Knighticonup.jpg");
+image = img.getImage();	
+}
+else if(direction[3]==true&&handler.getPlayer().getRole()==ROLE.KNIGHT) {
+img = new ImageIcon("C:/Javafiler/Knighticondown.jpg");
+image = img.getImage();	
+}
+
+//Mage draw
+if(direction[0]==true &&handler.getPlayer().getRole()==ROLE.MAGE) {
+img = new ImageIcon("C:/Javafiler/mageiconright.jpg");
+image = img.getImage();		
+
+}
+else if(direction[1]==true&&handler.getPlayer().getRole()==ROLE.MAGE) {
+img = new ImageIcon("C:/Javafiler/mageiconleft.jpg");
+image = img.getImage();	
+}
+else if(direction[2]==true&&handler.getPlayer().getRole()==ROLE.MAGE) {
+img = new ImageIcon("C:/Javafiler/mageiconup.jpg");
+image = img.getImage();	
+}
+else if(direction[3]==true&&handler.getPlayer().getRole()==ROLE.MAGE) {
+img = new ImageIcon("C:/Javafiler/mageicondown.jpg");
+image = img.getImage();	
+}
+
+
+//Thief draw
+if(direction[0]==true &&handler.getPlayer().getRole()==ROLE.THIEF) {
+img = new ImageIcon("C:/Javafiler/Thiefright.jpg");
+image = img.getImage();		
+
+}
+else if(direction[1]==true&&handler.getPlayer().getRole()==ROLE.THIEF) {
+img = new ImageIcon("C:/Javafiler/Thiefleft.jpg");
+image = img.getImage();	
+}
+else if(direction[2]==true&&handler.getPlayer().getRole()==ROLE.THIEF) {
+img = new ImageIcon("C:/Javafiler/Thiefup.jpg");
+image = img.getImage();	
+}
+else if(direction[3]==true&&handler.getPlayer().getRole()==ROLE.THIEF) {
+img = new ImageIcon("C:/Javafiler/Thiefdown.jpg");
+image = img.getImage();	
+}
+
+
+g.setColor(handler.getPlayer().getColor());
+g.drawImage(image, handler.getPlayer().getX(), handler.getPlayer().getY(), 35, 35, this);
 
 }	
 
 }
+
 }
 //Fyll kartan med X och Y värden
 public void fillMap(){
@@ -148,22 +227,50 @@ for(int j=0;j<mapcolumn.length;j++) {
 
 
 public void moveDown() {
+direction[0]=false;
+direction[1]=false;	
+direction[2]=false;
+direction[3]=true;		
+lastY[count]=handler.getPlayer().getY();
+lastX[count]=handler.getPlayer().getX();
+count++;
 handler.getPlayer().setY(handler.getPlayer().getY()+40);
 clamp();
 this.repaint();
 }
 
 public void moveUp() {
+direction[0]=false;
+direction[1]=false;	
+direction[2]=true;
+direction[3]=false;	
+lastY[count]=handler.getPlayer().getY();
+lastX[count]=handler.getPlayer().getX();
+count++;	
 handler.getPlayer().setY(handler.getPlayer().getY()-40);
 clamp();
 this.repaint();	
 }
 public void moveLeft() {
+direction[0]=false;
+direction[1]=true;	
+direction[2]=false;
+direction[3]=false;
+lastY[count]=handler.getPlayer().getY();
+lastX[count]=handler.getPlayer().getX();
+count++;		
 handler.getPlayer().setX(handler.getPlayer().getX()-75);
 clamp();
 this.repaint();	
 }
 public void moveRight() {
+direction[0]=true;
+direction[1]=false;	
+direction[2]=false;
+direction[3]=false;
+lastY[count]=handler.getPlayer().getY();
+lastX[count]=handler.getPlayer().getX();
+count++;		
 handler.getPlayer().setX(handler.getPlayer().getX()+75);
 clamp();
 this.repaint();		
