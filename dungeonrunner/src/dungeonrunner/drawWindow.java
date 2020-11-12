@@ -7,6 +7,7 @@ import java.awt.image.ImageProducer;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -27,13 +28,17 @@ private int[] mapX;
 //Exit point
 private ImageIcon img;
 private Image image;
+private ImageIcon monsterimg;
+private Image monsterimage;
+private int currentmonsterY;
+private int currentmonsterX;
 
 ImageProducer imgprod;
 
 private int x;
 private int y;
 private int count;
-Graphics g;
+
 /**
 	 * 
 	 */
@@ -51,12 +56,13 @@ mapY = new int[a];
 mapX= new int[b];
 lastX = new int[300];
 lastY=new int[300];
+
 visited = new boolean[a][b];
 mapcolor=a;
 monster = new boolean[a];  //0: Spider, 1: Orc, 2: Skeleton, 3: Troll
-rc = new RoomContent(a,b);
+rc = new RoomContent(a);
 //Count for last pos
-count =0;
+count =1;
 fillRooms(); //Set all rooms to false and fill them with content.
 x=75;
 y=50;	
@@ -74,13 +80,13 @@ printValues();
 
 
 
-//Måla ut rektanglarna.
+//Mï¿½la ut rektanglarna.
 public void paintComponent(Graphics g) {
 
 
-//Måla ut rektanglarna baserat på mapcolumn och maprow värdena som är kartan.
-//Maprow = y värden
-//Mapcolumn = x värden
+//Mï¿½la ut rektanglarna baserat pï¿½ mapcolumn och maprow vï¿½rdena som ï¿½r kartan.
+//Maprow = y vï¿½rden
+//Mapcolumn = x vï¿½rden
 	
 super.paintComponent(g);
 this.setBackground(Color.BLACK);
@@ -111,6 +117,7 @@ g.fillRect(mapX[0], mapY[i]+15, 525, 10);
 for(int z=0;z<mapcolumn.length;z++) {
 
 for(int j=0;j<mapcolumn.length;j++) {
+
 /*	
 if(mapcolor<=4) {
 g.setColor(Color.WHITE);
@@ -126,8 +133,10 @@ g.setColor(Color.WHITE);
 g.fillRect(mapX[j], mapY[z], 35, 35);
 for(int i=0;i<count;i++) {
 g.setColor(Color.DARK_GRAY);
-g.fillRect(lastX[i], lastY[i], 35, 35);		
+g.fillRect(lastX[i], lastY[i], 35, 35);	
+
 }
+
 
 
 //Knight draw
@@ -191,13 +200,20 @@ image = img.getImage();
 
 g.setColor(handler.getPlayer().getColor());
 g.drawImage(image, handler.getPlayer().getX(), handler.getPlayer().getY(), 35, 35, this);
-
+if(handler.getPlayer().getX()==rc.getOrcX(j)&&handler.getPlayer().getY()==rc.getOrcY(z)){
+	monsterimg = new ImageIcon("C:/Javafiler/Orcicon.jpg");
+	monsterimage = monsterimg.getImage();
+	g.drawImage(monsterimage,handler.getPlayer().getX(),handler.getPlayer().getY(),35,35, this);
+	handler.getPlayer().setX(lastX[count-1]);
+	handler.getPlayer().setY(lastY[count-1]);
+	
+	}	
 }	
-
 }
 
+
 }
-//Fyll kartan med X och Y värden
+//Fyll kartan med X och Y vï¿½rden
 public void fillMap(){
 Random rand = new Random();
 int randval = rand.nextInt(4)+1;
@@ -288,7 +304,7 @@ public int getRow(int a, int b) {
 return maprow[a][b];	
 }
 
-public void clamp() {   //Så att spelaren inte kan gå utanför dimensionen.
+public void clamp() {   //Sï¿½ att spelaren inte kan gï¿½ utanfï¿½r dimensionen.
 if(handler.getPlayer().getX()<mapcolumn[0][0]) {
 handler.getPlayer().setX(handler.getPlayer().getX()+75);
 this.repaint();
@@ -307,7 +323,7 @@ repaint();
 }
 }
 
-public void setClear() {   //Om spelaren går in i ett rum så blir det avcheckat.
+public void setClear() {   //Om spelaren gï¿½r in i ett rum sï¿½ blir det avcheckat.
 for(int i=0;i<mapcolumn.length;i++) {
 for(int j=0;j<mapcolumn.length;j++) {
 if(handler.getPlayer().getX()==mapcolumn[i][j] && handler.getPlayer().getY()==maprow[i][j]) {
@@ -323,36 +339,66 @@ for(int i =0;i< visited.length;i++) {
 for(int j=0;j<visited.length;j++) {
 visited[i][j]=false;	
 }
-
+}
 }
 
-}
 
-public int checkRooms() {   //Kolla in rummen och returnera en siffra beroende på vilket monster som finns.
+
+
+
+
+
+
+
+public int checkRooms() {   //Kolla in rummen och returnera en siffra beroende pï¿½ vilket monster som finns.
 	for(int i =0;i< mapcolumn.length;i++) {
 		for(int j=0;j<mapcolumn.length;j++) {
 		if(rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY())==0) {  //If room contains a spider
+		currentmonsterX=j;
+		currentmonsterY=i;
 		return 0;
 		}
 		else if(rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY())==1) { // if room contains an orc!
+		currentmonsterX=j;
+	currentmonsterY=i;
 		return 1;	
 		}
 		
 		else if(rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY())==2) { // if room contains a skeleton!!
-		return 2;	
+			currentmonsterX=j;
+			currentmonsterY=i;
+			return 2;	
 		}
 		
 		else if(rc.checkMonster(i, j, handler.getPlayer().getX(),handler.getPlayer().getY())==10) {  //If room contains an orc and a spider 1+0 = 10.
-		return 10;	
+			currentmonsterX=j;
+			currentmonsterY=i;
+			return 10;	
 		}
 		
 		}
+		
+	
 		
 		}
 	
 return -1;			
 }
+public int getmonsterY() {
+return currentmonsterY;	
+}
+public int getmonsterX() {
+return currentmonsterX;	
+}
 
+public int getlastX() {
+return lastX[count-1];	
+}
+public int getlastY() {
+return lastX[count-1];	
+}
 
-
+public RoomContent getRC() {
+return rc;	
+}
 }

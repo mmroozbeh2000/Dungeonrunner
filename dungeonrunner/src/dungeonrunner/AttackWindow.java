@@ -38,6 +38,7 @@ private JScrollPane jspane;
 
 //Boolean
 private boolean knightblock = false;
+private boolean monsterdefeat = false;
 
 //Jtextarea
 private JTextArea textarea;
@@ -135,9 +136,9 @@ playerlabel.setForeground(Color.GREEN);
 textarea = new JTextArea(10,15);
 textarea.setEditable(false);
 textarea.setLineWrap(true);
-/* lägg till strings från monsterklasserna
+/* lï¿½gg till strings frï¿½n monsterklasserna
  * t.ex "Spider attacked for x damage" eller "Player lost x hp"
- * Förslagsvis lägg in som methods i Entityklassen "attackMessage()";
+ * Fï¿½rslagsvis lï¿½gg in som methods i Entityklassen "attackMessage()";
  */
 setPreferredSize(new Dimension(400,400));
 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -281,6 +282,7 @@ revalidate();
 if(handler.getSpider().getEndurance()<=0&&handler.checkPlayer()==true) {
 JOptionPane.showMessageDialog(null, "You've slayed the beast!");
 monsterID=-1;
+monsterdefeat=true;
 this.dispose();
 }
 }
@@ -312,6 +314,7 @@ handler.getPlayer().setspecialAbility(true);
 monsterID=-1;
 //Restore block to knight
 handler.getPlayer().setspecialAbility(true);
+monsterdefeat=true;
 this.dispose();
 }
 }
@@ -400,7 +403,7 @@ revalidate();
 if(monster.attackAttempt()>player.dodgeAttempt()) {
 
 	
-//Monstren har extra hög skada under demot.	
+//Monstren har extra hï¿½g skada under demot.	
 if(monsterID==0) {	
 textarea.append("\nSpider attacks player for:" + " " + " 3");	
 attack.setEnabled(true);
@@ -429,7 +432,7 @@ revalidate();
 if(player.getEndurance()<=0) {
 JOptionPane.showMessageDialog(null, "You've died!");	
 handler.setplayerStatus(false);
-this.dispose();	  //Stäng ner rutan när man inte har någon tålighet kvar.
+this.dispose();	  //Stï¿½ng ner rutan nï¿½r man inte har nï¿½gon tï¿½lighet kvar.
 }
 }
 
@@ -515,8 +518,13 @@ revalidate();
 catch(Exception e) {
 e.printStackTrace();	
 }
+
+
 }
 
+public boolean getmonsterDefeated() {
+return monsterdefeat;	
+}
 
 }
 

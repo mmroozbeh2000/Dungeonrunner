@@ -49,7 +49,7 @@ awspider.addWindowListener(this);
 aworc.addWindowListener(this);
 awskeleton.addWindowListener(this);
 frame.addWindowListener(this);
-//Lägg till kartrutan
+//Lï¿½gg till kartrutan
 frame.add(dw);
 frame.pack();
 }
@@ -72,6 +72,24 @@ handler.newSkeleton();
 }
 else if(n==10) {
 awspider = new AttackWindow(0,handler);
+/*
+ * 
+ * Thread t = new Thread() {
+        public void run() {
+            synchronized(lock) {
+                while (aworc.isVisible())
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                System.out.println("Working now");
+            }
+        }
+    };
+    t.start();
+
+ */
 aworc = new AttackWindow(1,handler);
 }
 
@@ -91,6 +109,8 @@ public void keyPressed(KeyEvent e) {
 	 dw.moveDown();
 	 dw.setClear();
 	 initiateBattle(dw.checkRooms());
+	 
+	 
 	
 	   
 	 }
@@ -109,7 +129,7 @@ public void keyPressed(KeyEvent e) {
 	dw.moveLeft();
 	dw.setClear();
 	initiateBattle(dw.checkRooms());
-	 revalidate();
+	revalidate();
 	 }
 	 
 	 else if(key == KeyEvent.VK_RIGHT) {
@@ -135,7 +155,20 @@ public void windowOpened(WindowEvent e) {
 
 @Override
 public void windowClosing(WindowEvent e) {
+/*
+ *  @Override
+        public void windowClosing(WindowEvent arg0) {
+            synchronized (lock) {
+                frame.setVisible(false);
+                lock.notify();
+            }
+        }
 
+    });
+
+    t.join();
+ * 
+ */
 }
 
 @Override
@@ -145,8 +178,22 @@ public void windowClosed(WindowEvent e) {
 		this.remove(dw);
 		frame.dispose();
 		}
+	    else if(e.getSource()==aworc && aworc.getmonsterDefeated()==true) {
+	    
+    	dw.getRC().removeOrc(dw.getmonsterX(),dw.getmonsterY());		
+	    handler.getOrc().equals(null);
+
+	    }
+	    
+	    else if(e.getSource()==awspider && awspider.getmonsterDefeated()==true) {
+		    
+		    dw.getRC().removeSpider(dw.getmonsterX(),dw.getmonsterY());	
+		    handler.getSpider().equals(null);
+
+		    }
 		else if(e.getSource()==awspider && handler.getPlayer().getEndurance()<=0) {
 		this.remove(dw);
+		
 		frame.dispose();
 		}
 			
