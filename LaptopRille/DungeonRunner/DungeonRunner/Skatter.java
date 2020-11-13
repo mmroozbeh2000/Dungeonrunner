@@ -39,4 +39,24 @@ public class Skatter {
         //setTreasureCount(treasureCount)
     }
     
+    public static void randomMonster() {
+        //körs när spelaren går in i ett rum
+        if(randomHundred() <= 20) {
+            //skapa/hitta spider
+            //strid med spider
+        }
+        if(randomHundred() <= 15) {
+            //skapa/hitta skeleton
+            //strid med skeleton
+        }
+        if(randomHundred() <= 10) {
+            //skapa/hitta orc
+            //strid med orc
+        }
+        if(randomHundred() <= 5) {
+            //skapa/hitta troll
+            //strid med troll
+        }
+    }
+    
 }
