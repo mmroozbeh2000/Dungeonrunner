@@ -402,7 +402,9 @@ public int checkRooms() {   //Kolla in rummen och returnera en siffra beroende p
 			currentmonsterX=j;
 			currentmonsterY=i;
 			}
-		
+		else if (rc.checkExit(i, j, handler.getPlayer().getX(),handler.getPlayer().getY())==5){  //If room contains an exit
+                return 5;
+                }
 		
 		
 		}
