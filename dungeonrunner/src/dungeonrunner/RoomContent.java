@@ -35,6 +35,9 @@ private int treasurechestX[];
 private int treasurechestY[];
 private int jewelryX[];
 private int jewelryY[];
+// Exit points på kartan  
+private int exitX[];
+private int exitY[];
 
 PriorityQueue<JFrame> queue;
 private Random rand;
@@ -72,6 +75,9 @@ jewelryX = new int[a*a];
 jewelryY= new int[a*a];
 treasurechestX = new int[a*a];
 treasurechestY = new int[a*a];
+//Exits
+exitX = new int[a*a];
+exitY = new int[a*a];
 //Fill treasures
 fillCoin();
 fillcoinPurse();
@@ -83,8 +89,28 @@ fillSpiders();
 fillOrcs();
 fillSkeletons();
 fillTrolls();
+//Fill exits
+fillExit(); //NY KOD
 }
 
+public void fillExit() {  //NY KOD
+        x = 75;
+        y = 50;
+        for (int i = 0; i < mapsize.length; i++) {
+            x = 75;
+            y += 40;
+            for (int j = 0; j < mapsize.length; j++) {
+                randval = rand.nextInt(100) + 1;
+
+                if (randval >= 20) {
+                 //Exit added to specific coordinates	
+                    exitX[j] = x;
+                    exitY[i] = y;
+                    x += 75;
+                }
+            }
+        }
+    }
 
 public void fillCoin() {
 x=75;
@@ -273,7 +299,13 @@ public void fillTrolls() {
 
 
 
-
+public int checkExit(int a, int b, int x, int y) { // NY KOD
+        if (exitX[b] == x && exitY[a] == y) {                
+            return 5;
+            
+        }
+        return -1;
+}
 
 
 
@@ -330,6 +362,13 @@ spiderY[b]=0;
 public void removeOrc(int a, int b) {
 orcX[a]=0;
 orcY[b]=0;
+}
+
+public boolean getExits(int a, int b) {   //NY KOD
+if (exitX[a] > 0 && exitY[b] > 0) {
+   return true;
+        }
+   return false;
 }
 public boolean getOrcs(int a, int b) {
 if(orcX[b]>0 && orcY[a]>0) {
