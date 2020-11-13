@@ -115,6 +115,15 @@ public void keyPressed(KeyEvent e) {
 	 dw.moveDown();
 	 dw.setClear();
 	 initiateBattle(dw.checkRooms());
+	 if (dw.checkRooms() == 5) {
+                int dialogButton = JOptionPane.showConfirmDialog(null, "WE HAVE FOUND AN EXIT! \nShall we go out?", " ", JOptionPane.YES_NO_OPTION);
+                if (dialogButton == JOptionPane.YES_OPTION) {
+                    remove(dw);
+                    frame.dispose();
+                } else {
+                    remove(dialogButton);
+                }
+            }
 	 
 	 
 	
@@ -125,6 +134,15 @@ public void keyPressed(KeyEvent e) {
 	dw.moveUp();
 	dw.setClear();
 	initiateBattle(dw.checkRooms());
+	if (dw.checkRooms() == 5) {
+                int dialogButton = JOptionPane.showConfirmDialog(null, "WE HAVE FOUND AN EXIT! \nShall we go out?", " ", JOptionPane.YES_NO_OPTION);
+                if (dialogButton == JOptionPane.YES_OPTION) {
+                    remove(dw);
+                    frame.dispose();
+                } else {
+                    remove(dialogButton);
+                }
+            }
 	 
 	
 	
@@ -136,6 +154,15 @@ public void keyPressed(KeyEvent e) {
 	dw.setClear();
 	initiateBattle(dw.checkRooms());
 	revalidate();
+        if (dw.checkRooms() == 5) {
+                int dialogButton = JOptionPane.showConfirmDialog(null, "WE HAVE FOUND AN EXIT! \nShall we go out?", " ", JOptionPane.YES_NO_OPTION);
+                if (dialogButton == JOptionPane.YES_OPTION) {
+                    remove(dw);
+                    frame.dispose();
+                } else {
+                    remove(dialogButton);
+                }
+            }
 	 }
 	 
 	 else if(key == KeyEvent.VK_RIGHT) {
@@ -143,6 +170,15 @@ public void keyPressed(KeyEvent e) {
 	dw.setClear();
 	initiateBattle(dw.checkRooms());
 	 revalidate();
+	if (dw.checkRooms() == 5) {
+                int dialogButton = JOptionPane.showConfirmDialog(null, "WE HAVE FOUND AN EXIT! \nShall we go out?", " ", JOptionPane.YES_NO_OPTION);
+                if (dialogButton == JOptionPane.YES_OPTION) {
+                    remove(dw);
+                    frame.dispose();
+                } else {
+                    remove(dialogButton);
+                }
+            }
 		 
 	 }
 
