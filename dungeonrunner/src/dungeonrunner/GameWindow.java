@@ -20,6 +20,7 @@ private drawWindow dw;
  AttackWindow awspider;
  AttackWindow aworc;
  AttackWindow awskeleton;
+ AttackWindow awtroll;
 private boolean[] monster;
 private Hanteraren handler;
 private JFrame frame;
@@ -69,6 +70,11 @@ else if(n==2) {
 awskeleton = new AttackWindow(2, handler);
 awskeleton.addWindowListener(this);
 handler.newSkeleton();
+}
+else if(n==3) {
+awtroll = new AttackWindow(3,handler);
+awtroll.addWindowListener(this);
+handler.newTroll();
 }
 else if(n==10) {
 awspider = new AttackWindow(0,handler);

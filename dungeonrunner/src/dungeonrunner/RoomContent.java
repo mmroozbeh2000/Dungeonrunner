@@ -82,6 +82,7 @@ fillGold();
 fillSpiders();
 fillOrcs();
 fillSkeletons();
+fillTrolls();
 }
 
 
@@ -196,7 +197,7 @@ y+=40;
 for(int j=0;j<mapsize.length;j++) {
 randval = rand.nextInt(100)+1;
 
-if(randval>=80 ) {
+if(randval>=99 ) {
 //Spider added to specific coordinates	
 spiderX[j]=x;
 spiderY[i]=y;
@@ -216,7 +217,7 @@ public void fillOrcs() {
 	for(int j=0;j<mapsize.length;j++) {
 	randval = rand.nextInt(100)+1;
 
-	if(randval>=80) {
+	if(randval>=99) {
 	//Orc added to specific coordinates	
 	orcX[j]=x;
 	orcY[i]=y;
@@ -249,6 +250,28 @@ public void fillSkeletons() {
 	
 }
 
+public void fillTrolls() {
+	x=75;
+	y=50;	
+	for(int i=0;i<mapsize.length;i++) {
+	x=75;	
+	y+=40;	
+	for(int j=0;j<mapsize.length;j++) {
+	randval = rand.nextInt(100)+1;
+
+	if(randval>=50 ) {
+	//Troll added to specific coordinates	
+	trollX[j]=x;
+	trollY[i]=y;
+	x+=75;	
+	}
+	}	
+	}
+	
+	
+}
+
+
 
 
 
@@ -280,6 +303,11 @@ return 1;
 else if(skeletonX[b]==x && skeletonY[a]==y){
 handler.newSkeleton();
 return 2;
+}
+
+else if(trollX[b]==x && trollY[a]==y){
+handler.newTroll();
+return 3;
 }
 
 //If room contain an orc and a spider

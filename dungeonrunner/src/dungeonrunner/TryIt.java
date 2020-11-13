@@ -44,11 +44,11 @@ public TryIt() {
 	mw = new MenuWindow();
 	mw.addWindowListener(this);
 	
-	/*
-	File menuMusic = new File("C:/Javafiler/Halloween.wav");
+         
+	File menuMusic = new File("C:/Javafiler/Rikardsong2.wav");
 	Sound s = new Sound();
 	s.playSound(menuMusic);
-	*/
+	
 	
 }
 

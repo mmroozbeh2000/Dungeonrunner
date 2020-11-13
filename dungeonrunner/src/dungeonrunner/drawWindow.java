@@ -91,8 +91,7 @@ public void paintComponent(Graphics g) {
 super.paintComponent(g);
 this.setBackground(Color.BLACK);
 
-//Skriv ut raderna 
-/*
+//Skriv ut raderna
 if(mapcolor<=4) {
 g.setColor(Color.WHITE);
 g.fillRect(mapX[0], mapY[0]+15, 225,10);
@@ -102,18 +101,17 @@ g.fillRect(mapX[0], mapY[3]+15, 225,10);
 }
 
 else if(mapcolor>=4&&mapcolor<=6) {
-g.setColor(Color.CYAN);	
+
 for(int i=0;i<mapX.length;i++) {
 g.fillRect(mapX[0], mapY[i]+15, 300, 10);	
 }
 }
-else if(mapcolor>=6&&mapcolor<=8) {
-g.setColor(Color.GREEN);	
+else if(mapcolor>=6&&mapcolor<=8) {	
 for(int i=0;i<mapX.length;i++) {
 g.fillRect(mapX[0], mapY[i]+15, 525, 10);	
 }	
 }
-*/
+
 for(int z=0;z<mapcolumn.length;z++) {
 
 for(int j=0;j<mapcolumn.length;j++) {
@@ -203,7 +201,7 @@ g.drawImage(image, handler.getPlayer().getX(), handler.getPlayer().getY(), 35, 3
 if(handler.getPlayer().getX()==rc.getOrcX(j)&&handler.getPlayer().getY()==rc.getOrcY(z)){
 	monsterimg = new ImageIcon("C:/Javafiler/Orcicon.jpg");
 	monsterimage = monsterimg.getImage();
-	g.drawImage(monsterimage,handler.getPlayer().getX(),handler.getPlayer().getY(),35,35, this);
+	g.drawImage(monsterimage,rc.getOrcX(j),rc.getOrcY(z),35,35, this);
 	handler.getPlayer().setX(lastX[count-1]);
 	handler.getPlayer().setY(lastY[count-1]);
 	
@@ -370,11 +368,42 @@ public int checkRooms() {   //Kolla in rummen och returnera en siffra beroende p
 			return 2;	
 		}
 		
+		else if(rc.checkMonster(i, j ,handler.getPlayer().getX(), handler.getPlayer().getY())==3) { // if room contains a troll!!
+			currentmonsterX=j;
+			currentmonsterY=i;
+			return 3;	
+		}
+		
 		else if(rc.checkMonster(i, j, handler.getPlayer().getX(),handler.getPlayer().getY())==10) {  //If room contains an orc and a spider 1+0 = 10.
 			currentmonsterX=j;
 			currentmonsterY=i;
 			return 10;	
 		}
+		else if(rc.checkMonster(i, j, handler.getPlayer().getX(), handler.getPlayer().getY())==21) { //Orc and skeleton
+		currentmonsterX=j;
+		currentmonsterY=i;
+		}
+		
+		else if(rc.checkMonster(i, j, handler.getPlayer().getX(), handler.getPlayer().getY())==31) { //Troll and orc
+			currentmonsterX=j;
+			currentmonsterY=i;
+			}
+		else if(rc.checkMonster(i, j, handler.getPlayer().getX(), handler.getPlayer().getY())==20) { //Skeleton and spider
+			currentmonsterX=j;
+			currentmonsterY=i;
+			}
+		
+		else if(rc.checkMonster(i, j, handler.getPlayer().getX(), handler.getPlayer().getY())==30) { //Troll and spider
+			currentmonsterX=j;
+			currentmonsterY=i;
+			}
+		
+		else if(rc.checkMonster(i, j, handler.getPlayer().getX(), handler.getPlayer().getY())==32) { //Troll and skeleton
+			currentmonsterX=j;
+			currentmonsterY=i;
+			}
+		
+		
 		
 		}
 		

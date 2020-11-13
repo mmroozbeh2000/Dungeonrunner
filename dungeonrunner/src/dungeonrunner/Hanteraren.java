@@ -10,6 +10,7 @@ static Entity Player;
 static Entity Spider;
 static Entity Orc;
 static Entity Skeleton;
+static Entity Troll;
 static boolean playerstatus;
 static List<Entity> Entitylist = new LinkedList<>();	
 List<mapBox> boxlist = new ArrayList<>();
@@ -36,7 +37,7 @@ public void newSpider(){
 Spider = new Spider();
 }
 public void newTroll(){
-Entitylist.add(new Troll());	
+Troll = new Troll();	
 }
 
 public void newSkeleton(){
@@ -66,6 +67,9 @@ public Entity getSkeleton() {
 return Skeleton;	
 }
 
+public Entity getTroll() {
+return Troll;	
+}
 public Entity getEntity(int n){
 return Entitylist.get(n);
 }

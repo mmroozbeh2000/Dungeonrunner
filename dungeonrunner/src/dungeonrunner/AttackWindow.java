@@ -49,12 +49,14 @@ private JLabel playerlabel;
 private JLabel spiderlabel;
 private JLabel orclabel;
 private JLabel skeletonlabel;
+private JLabel trolllabel;
 
 //Progressbar
 JProgressBar spiderbar;
 JProgressBar playerbar;
 JProgressBar orcbar;
 JProgressBar skeletonbar;
+JProgressBar trollbar;
 
 //JPanels
 private JPanel imagepanel;
@@ -88,6 +90,7 @@ imageicons = new ImageIcon[6];
 imageicons[0]=new ImageIcon("C:/Javafiler/Spider.jpg");
 imageicons[1]=new ImageIcon("C:/Javafiler/Orc.png");
 imageicons[2]= new ImageIcon("C:/Javafiler/skeleton.jpg");
+imageicons[3]= new ImageIcon("C:/Javafiler/troll.jpg");
 if(handler.getPlayer().getRole()==ROLE.KNIGHT) {
 imageicons[5]=new ImageIcon("C:/Javafiler/Warrior.png");	
 }
@@ -105,18 +108,22 @@ spiderbar = new JProgressBar();
 orcbar = new JProgressBar();
 playerbar = new JProgressBar();
 skeletonbar = new JProgressBar();
+trollbar = new JProgressBar();
 spiderbar.setValue(100);
 playerbar.setValue(100);
 orcbar.setValue(100);
 skeletonbar.setValue(100);
+trollbar.setValue(100);
 playerbar.setBackground(Color.BLACK);
 playerbar.setForeground(Color.GREEN);
-spiderbar.setBackground(Color.BLACK);
+spiderbar.setBackground(Color.RED);
 spiderbar.setForeground(Color.GREEN);
 orcbar.setForeground(Color.GREEN);
 orcbar.setBackground(Color.BLACK);
-
-
+skeletonbar.setBackground(Color.BLACK);
+skeletonbar.setForeground(Color.WHITE);
+trollbar.setBackground(Color.BLACK);
+trollbar.setForeground(Color.BLUE);
 
 
 //JLabels
@@ -239,6 +246,23 @@ buttonpanel.add(flee);
 pack();
 }
 
+if(n==3) {
+trolllabel = new JLabel("Troll endurance" + Integer.toString(handler.getTroll().getEndurance()));
+imagepanel.add(imagelabels[3]);
+barpanel.add(playerlabel);
+barpanel.add(playerbar);
+barpanel.add(trolllabel);
+barpanel.add(trollbar);
+add(imagepanel, BorderLayout.NORTH);
+add(jspane, BorderLayout.CENTER);
+add(buttonpanel, BorderLayout.SOUTH);
+add(barpanel, BorderLayout.WEST);
+//Start the battle with Skeleton
+buttonpanel.add(battle);
+buttonpanel.add(flee);
+pack();	
+}
+
 
 	
 }
@@ -262,12 +286,17 @@ else if(monsterID==2) {
 buttonpanel.remove(battle);		
 beginBattle(handler.getSkeleton(),handler.getPlayer());	
 }
+
+else if(monsterID==3) {
+buttonpanel.remove(battle);		
+beginBattle(handler.getTroll(),handler.getPlayer());	
+}
 }
 catch(Exception ex) {
 ex.printStackTrace();	
 }
 }
-
+//Attack Spider!
 else if(e.getSource()==attack&&monsterID ==0) {	
 attack.setEnabled(false);
 flee.setEnabled(false);	
@@ -292,7 +321,7 @@ ex.printStackTrace();
 }
 
 
-
+//Attack Orc!
 else if(e.getSource()==attack&&monsterID ==1) {	
 attack.setEnabled(false);
 flee.setEnabled(false);	
@@ -322,7 +351,7 @@ catch(Exception ex) {
 ex.printStackTrace();	
 }
 }
-
+//Attack skeleton
 else if(e.getSource()==attack&&monsterID ==2) {	
 attack.setEnabled(false);
 flee.setEnabled(false);	
@@ -352,6 +381,37 @@ catch(Exception ex) {
 ex.printStackTrace();	
 }
 }
+
+else if(e.getSource()==attack&&monsterID ==3) {	
+attack.setEnabled(false);
+flee.setEnabled(false);	
+revalidate();	
+try {	
+Thread.sleep(500);	
+playerAttack(handler.getTroll(), handler.getPlayer(), monsterID);	
+Thread.sleep(500);
+revalidate();
+Thread.sleep(500);
+beginBattle(handler.getTroll(), handler.getPlayer());
+attack.setEnabled(true);
+flee.setEnabled(true);
+revalidate();
+
+
+if(handler.getTroll().getEndurance()<=0&&handler.checkPlayer()==true) {
+JOptionPane.showMessageDialog(null, "You've slayed the beast!");
+handler.getPlayer().setspecialAbility(true);
+monsterID=-1;
+//Restore block to knight
+handler.getPlayer().setspecialAbility(true);
+this.dispose();
+}
+}
+catch(Exception ex) {
+ex.printStackTrace();	
+}
+}
+	
 	
 	
 	
@@ -381,6 +441,12 @@ monsterAttack(monster,player, monsterID);
 }
 else if(monsterID==2) {
 textarea.append("\nSkeleton begins to attack!");	
+revalidate();
+monsterAttack(monster,player, monsterID);
+}
+
+else if(monsterID==3) {
+textarea.append("\nTroll begins to attack!");	
 revalidate();
 monsterAttack(monster,player, monsterID);
 }
@@ -416,6 +482,12 @@ flee.setEnabled(true);
 }
 else if(monsterID==2) {
 textarea.append("\nSkeleton attacks player for "+ " " +"3" );	
+attack.setEnabled(true);
+flee.setEnabled(true);
+}
+
+else if(monsterID==3) {
+textarea.append("\nTroll attacks player for "+ " " +"3" );	
 attack.setEnabled(true);
 flee.setEnabled(true);
 }
@@ -467,6 +539,13 @@ flee.setEnabled(true);
 revalidate();
 }
 
+else if(monsterID==3) {
+textarea.setText("\nTroll missed it's attack!");	
+attack.setEnabled(true);
+flee.setEnabled(true);
+revalidate();
+}
+
 }
 ///#
 
@@ -502,6 +581,14 @@ textarea.append("\nPlayer attacked Skeleton for" + player.getDamage() + " " + "D
 monster.setEndurance(monster.getEndurance()-player.getDamage());
 skeletonlabel.setText("Skeleton Endurance:" + Integer.toString(monster.getEndurance()));
 skeletonbar.setValue(monster.getEndurance());
+revalidate();
+}
+
+else if(monsterID==3) {
+textarea.append("\nPlayer attacked Troll for" + player.getDamage() + " " + "Damage");
+monster.setEndurance(monster.getEndurance()-player.getDamage());
+trolllabel.setText("Troll Endurance:" + Integer.toString(monster.getEndurance()));
+trollbar.setValue(monster.getEndurance());
 revalidate();
 }
 revalidate();
